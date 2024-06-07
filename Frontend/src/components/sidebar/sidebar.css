@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Andika');
+
+.dashboard {
+    font-family: "Andika", sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dashboard_title {
+    color: #181818;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.dashboard_category {
+    margin-top: 20px;
+}
+
+.dashboard_subcategory {
+    margin-left: 20px;
+    color: gray;
+}
+
+
+.dashboard_link {
+    cursor: pointer;
+    padding: 10px 0;
+    margin-left: 20px;
+    color: #646870;
+    display: flex;
+    border-radius: 10px;
+    margin-right: 8px;
+    text-decoration: none;
+    margin-top: 8px;
+    transition: 0.1s;
+}
+
+.dashboard_link:hover, .dashboard_link:hover svg {
+    background-color: #3ba8db;
+    fill: #e4ede6;
+    color: #e4ede6;
+}
+
+.dashboard_link svg{
+    fill: #646870;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.dashboard_link p {
+    line-height: 24px;
+    margin: 0;
+    padding-left: 15px;
+}
+
+.active, .active svg {
+    background-color: #3ba8db;
+    fill: #e4ede6;
+    color: #e4ede6; 
+}

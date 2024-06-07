@@ -1,0 +1,11 @@
+.Rpg-Bot {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.Rpg-Bot .card-container .card-link {
+    text-decoration: none;
+    border: 2px solid red;
+}

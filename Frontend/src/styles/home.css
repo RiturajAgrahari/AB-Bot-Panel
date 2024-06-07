@@ -1,0 +1,13 @@
+.Home {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    background-color: #f2fbff;
+}
+
+.active-component {
+    width: 70%;
+    margin: 70px;
+    height: 100vh;
+}

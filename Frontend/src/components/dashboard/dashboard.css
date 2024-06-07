@@ -1,0 +1,81 @@
+.Dashboard {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.path {
+    color: gray;
+    display: flex;
+}
+
+.path .path-link {
+    text-decoration: underline;
+    color: gray;
+}
+
+.dashboard-content { 
+    width: 70%;
+    height: 100vh;
+    background-color: #f2fbff;
+    padding: 5% 5%; 
+}
+
+.dashboard-content h1 {
+    margin-bottom: 40px;
+}
+
+.basic_datasets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.basic_datasets .basic_data {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    border-radius: 20px;
+    width: calc(100% / 3 - 50px);
+    height: 50%;
+    margin-bottom: 50px;
+}
+
+.basic_data svg {
+    border-radius: 50%;
+    padding: 10px;
+    margin: 20px 0 0 20px;
+}
+
+.basic_data .numbers{
+    margin: 3px 0 0 20px;
+    padding: 0;
+    font-weight: bold   ;
+}
+
+.basic_data .text{
+    font-size: 12px;
+    color: gray;
+    margin: 3px 0 20px 20px;
+    padding: 0;
+}
+
+.cyanish {
+    fill: #3ba8db;
+    background-color: #f2fbff;
+}
+
+.orangish {
+    fill: #ff8c4a;
+    background-color: #ffe3d4;
+}
+
+.greenish {
+    fill: #26bf3c;
+    background-color: #e3ffe7;
+}
+
+.devblog_crud {
+    border: 2px solid red;
+    margin-top: 40px;
+}

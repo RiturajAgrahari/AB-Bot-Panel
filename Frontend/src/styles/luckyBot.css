@@ -1,0 +1,18 @@
+.Lucky-Bot {
+    display: flex;
+    align-items: self-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    background-color: #f2fbff;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.devblog_crud {
+    margin-top: 40px;
+}
