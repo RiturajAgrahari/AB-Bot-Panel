@@ -1,12 +1,3 @@
-# First step to delete a file/folder
-/src/components/dashboard
-/src/components/fandomBot
-/src/components/loginView
-/src/components/luckyBot
-/src/components/Profile
-/src/components/rpgBot
-/src/components/sidebar
-
 # Logs
 logs
 *.log
