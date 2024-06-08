@@ -50,3 +50,28 @@ class Inventory(models.Model):
     class Meta:
         db_table = "inventory"
         managed = False
+
+
+class Personalized_test_question(models.Model):
+    id = models.BigIntegerField(verbose_name="id", primary_key=True)
+    title = models.CharField(verbose_name="title", max_length=225, null=True)
+    description = models.CharField(verbose_name='description', max_length=400, null=True)
+    image = models.URLField(verbose_name="image", null=True)
+    type = models.CharField(verbose_name="type", max_length=100, null=True)
+    time = models.DateTimeField(verbose_name="time", null=True)
+
+    class Meta:
+        db_table = "personalized_test_question"
+        managed = False
+
+
+class Personalized_test_answer(models.Model):
+    id = models.BigIntegerField(verbose_name="id", primary_key=True)
+    user_id = models.BigIntegerField(verbose_name="uid", null=False)
+    question_id = models.BigIntegerField(verbose_name="question id", null=False)
+    answers = models.CharField(verbose_name="answers", max_length=224, null=True)
+    time = models.DateTimeField(verbose_name="time", null=True)
+
+    class Meta:
+        db_table = "personalized_test_answer"
+        managed = False

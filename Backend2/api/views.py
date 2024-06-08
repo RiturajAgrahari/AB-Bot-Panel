@@ -9,7 +9,7 @@ from rest_framework import generics, mixins, permissions, authentication
 
 from rest_framework.pagination import PageNumberPagination
 
-from .models import Profile, TodayLuck, Events, Inventory
+from .models import Profile, TodayLuck, Events, Inventory, Personalized_test_question, Personalized_test_answer
 from .serializers import ProfileSerializer, EventSerializer, TodayLuckSerializer
 
 # Create your views here.
@@ -141,9 +141,17 @@ class ProfilesMixinView(
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     lookup_field = 'uid'
+    pagination_class = PageNumberPagination
+    PageNumberPagination.page_size = 20
 
     def get(self, request, *args, **kwargs):
         uid = kwargs.get("uid")
+
+        page_items = request.query_params.get("pageitems", 10)
+        if page_items == "all":
+            PageNumberPagination.page_size = 100000
+        else:
+            PageNumberPagination.page_size = page_items
         if uid is not None:
             return self.retrieve(request, *args, **kwargs)
         return self.list(request, *args, **kwargs)
@@ -160,6 +168,21 @@ def TotalProfilesView(request, *args, **kwargs):
     total_profiles = instances.count() if instances else 0
     data = {
         'total_profiles': total_profiles,
+    }
+
+    return Response(data)
+
+
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def TotalPersonalizedView(request, *args, **kwargs):
+    question_instances = Personalized_test_question.objects.all()
+    answer_instances = Personalized_test_answer.objects.all()
+
+    data = {
+        "total_questions": question_instances.count() if question_instances else 0,
+        "total_answers": answer_instances.count() if answer_instances else 0
     }
 
     return Response(data)
