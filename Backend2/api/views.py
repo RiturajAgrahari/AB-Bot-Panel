@@ -10,7 +10,7 @@ from rest_framework import generics, mixins, permissions, authentication
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Profile, TodayLuck, Events, Inventory, Personalized_test_question, Personalized_test_answer
-from .serializers import ProfileSerializer, EventSerializer, TodayLuckSerializer
+from .serializers import ProfileSerializer, EventSerializer, TodayLuckSerializer, PersonalizedQuestionsSerializers, PersonalizedAnswersSerializer
 
 # Create your views here.
 
@@ -186,3 +186,29 @@ def TotalPersonalizedView(request, *args, **kwargs):
     }
 
     return Response(data)
+
+
+class PersonalizedQuestions(
+    mixins.ListModelMixin,
+    generics.GenericAPIView
+):
+    queryset = Personalized_test_question.objects.all()
+    serializer_class = PersonalizedQuestionsSerializers
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class PersonalizedAnswers(
+    mixins.ListModelMixin,
+    generics.GenericAPIView
+):
+    queryset = Personalized_test_answer
+    serializer_class = PersonalizedAnswersSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, TodayLuck, Events
+from .models import Profile, TodayLuck, Events, Personalized_test_question, Personalized_test_answer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -35,4 +35,29 @@ class TodayLuckSerializer(serializers.ModelSerializer):
             "weapon",
             "item",
             "summary",
+        ]
+
+
+class PersonalizedQuestionsSerializers(serializers.ModelSerializer):
+     class Meta:
+         model = Personalized_test_question
+         fields = [
+             "id",
+             "title",
+             "description",
+             "image",
+             "type",
+             "time",
+         ]
+
+
+class PersonalizedAnswersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Personalized_test_answer
+        fields = [
+            "id",
+            "user_id",
+            "question_id",
+            "answers",
+            "time",
         ]
