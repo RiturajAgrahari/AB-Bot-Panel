@@ -194,7 +194,7 @@ class PersonalizedQuestions(
 ):
     queryset = Personalized_test_question.objects.all()
     serializer_class = PersonalizedQuestionsSerializers
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
 
     def get(self, request, *args, **kwargs):
@@ -205,7 +205,7 @@ class PersonalizedAnswers(
     mixins.ListModelMixin,
     generics.GenericAPIView
 ):
-    queryset = Personalized_test_answer
+    queryset = Personalized_test_answer.objects.all()
     serializer_class = PersonalizedAnswersSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
