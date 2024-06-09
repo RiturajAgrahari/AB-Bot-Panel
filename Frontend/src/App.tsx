@@ -13,6 +13,10 @@ import LuckyBot from './pages/luckyBot'
 import TodayLuck from './pages/today_luck'
 import Profiles from './pages/profiles'
 import UserProfile from './pages/profile'
+import PersonalizedBot from './pages/personalizedBot'
+import Charts from './pages/Chart'
+import PersonalizedBotQuestion from './pages/questions'
+import PersonalizedBotAnswers from './pages/answers'
 
 type ProfileWrapperProps = {
   activeSidebarLink: number;
@@ -45,9 +49,13 @@ function App() {
         <Route path='/lucky-bot/profiles' element={<ProtectedRoute><Home activeSidebarLink={1} component={<TodayLuck />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot' element={<ProtectedRoute><Home activeSidebarLink={3} component={<RPGBot />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot/inventory' element={<ProtectedRoute><Home activeSidebarLink={3} component={<Inventory />}/></ProtectedRoute>} ></Route>
-        <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={4} component={<Profiles />}></Home></ProtectedRoute>} />
-        <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={4} component={<Profile />}/></ProtectedRoute>} />
-        <Route path='/profile/:number' element={<ProtectedRoute><ProfileWrapper activeSidebarLink={4}/></ProtectedRoute>} />
+        <Route path='/personalized-bot' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBot />}/></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/questions' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotQuestion />}/></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/answers' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotAnswers />}/></ProtectedRoute>} ></Route>
+        <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profiles />}></Home></ProtectedRoute>} />
+        <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profile />}/></ProtectedRoute>} />
+        <Route path='/profile/:number' element={<ProtectedRoute><ProfileWrapper activeSidebarLink={5}/></ProtectedRoute>} />
+        <Route path='/charts' element={<ProtectedRoute><Home activeSidebarLink={8} component={<Charts />} /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>

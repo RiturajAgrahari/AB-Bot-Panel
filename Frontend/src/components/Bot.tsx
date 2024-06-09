@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "../styles/Bot.css"
 
 interface BotCardProps {
@@ -8,10 +9,14 @@ interface BotCardProps {
 }
 
 function BotCard(props: BotCardProps) {
+    const [css, setCss] = useState("")
+
     return (
+        
         <div className="Bot-Card">
-            <div className="bot-pfp">
-                <img src={props.pfp} alt="Lucky Bot" />
+            <div className="bot-pfp" style={{backgroundColor: "rgb(0, 0, 0)"}}>
+                <img src={props.pfp} alt={props.BotName} />
+                <span className="bot-status" style={{backgroundColor: props.status ? "rgb(35, 165, 95)": "red"}}></span>
             </div>
             <div className="bot-info">
                 <p className="bot-name">{props.BotName}</p>

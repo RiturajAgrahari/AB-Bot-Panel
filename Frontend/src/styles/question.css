@@ -1,0 +1,62 @@
+.question-component {
+    border: 1px solid black;
+    margin: 10px 0;
+    padding: 25px;
+    display: flex;
+}
+
+.question-component .question-image {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.question-component .question-image img {
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
+}
+
+.question-component .question-data {
+    margin: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.question-component .question-data .question-details p:first-child{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.question-component .question-data .question-footer {
+    display: flex;
+    /* gap: 20px; */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.question-component .question-data .question-footer .check-asnwer-button {
+    color: green;
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid green;
+    font-size: 14px;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.question-component .question-data .question-footer .check-asnwer-button:hover {
+    background-color: rgba(7, 120, 7, 0.3);
+}
+
+.question-component .question-data .question-footer p {
+    color: gray;
+    font-weight: 500;
+}
