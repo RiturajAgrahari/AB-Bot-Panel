@@ -33,6 +33,7 @@ const LuckyBot = () => {
                 <h1>Lucky Bot</h1>
                 <div className="card-container">
                     <Link style={{textDecoration: "none", color: "black"}} to={"profiles/"}><Card Title="Profiles" Amount={totalTodayLuck} Logo={0}/></Link>
+                    <Link style={{textDecoration: "none", color: "black"}} to={"statistics/"}><Card Title="Statistics" Amount={80} Logo={5}/></Link>
                 </div>
             </div>
         </div>

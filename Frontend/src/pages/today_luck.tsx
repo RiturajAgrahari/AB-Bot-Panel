@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "../api";
 import { Link } from "react-router-dom"
 
@@ -16,14 +16,27 @@ const TodayLuck = () => {
     const [todayLuck, setTodayLuck] = useState([])
     const [loading, setLoading] = useState(false)
     const [searchFor, setSearchFor] = useState("")
+    const [category, setCategory] = useState("")
+    const [inputState, setInputState] = useState(true)
+    const searchBarRef = useRef<HTMLInputElement>(null)
 
+    const handleCategorySelect = (e:React.FormEvent<HTMLSelectElement>) => {
+        if (e.currentTarget.value) {
+            setCategory(e.currentTarget.value)
+            setInputState(false)
+        } else {
+            setInputState(true)
+        }
+        setSearchFor("");
+        searchBarRef.current?.focus();  
 
+    }
 
     useEffect(() => {
         const FetchTodayLuck = async () => {
             setLoading(true)
             try {
-                const res = await api.get("api-data/lucky-bot/today_luck/")
+                const res = await api.get(`api-data/lucky-bot/today_luck/?category=${category}&search=${searchFor}`)
                 if (res.status == 200) {
                     setTodayLuck(res.data)
                 }
@@ -34,7 +47,7 @@ const TodayLuck = () => {
             }
         }
         FetchTodayLuck();
-    }, [])
+    }, [searchFor])
 
     return (
         <div className="Inventory">
@@ -47,7 +60,16 @@ const TodayLuck = () => {
                 </div>
                 <h1>Lucky Bot</h1>
                 <div className="search-bar">
-                    <input type="text" className="search" placeholder="Search" autoComplete="false" onChange={(event) => setSearchFor(event.target.value)}></input>
+                    <input ref={searchBarRef} type="text" className="search" value={searchFor} placeholder="Search" autoComplete="false" onChange={(event) => setSearchFor(event.target.value)} disabled={inputState}></input>
+                    <select name="category" className="search-for" defaultValue={category} onChange={(e) => {handleCategorySelect(e)}} required>
+                        <option value="">None</option>
+                        <option value="uid">UID</option>
+                        <option value="location">Location</option>
+                        <option value="container">Container</option>
+                        <option value="weapon">Weapon</option>
+                        <option value="item">Item</option>
+                        <option value="summary">Summary</option>
+                    </select>
                 </div>
                 <div className="loader" style={{display: loading ? "flex" : "none"}}>
                     <div className="loading-bar"></div>

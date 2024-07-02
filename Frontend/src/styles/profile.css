@@ -48,6 +48,10 @@ tr:nth-child(even) {
     margin-bottom: 3px;
 }
 
+.search-bar .search-for {
+    padding: 10px;
+}
+
 .search {
     padding: 10px 20px;
     margin: 10px;

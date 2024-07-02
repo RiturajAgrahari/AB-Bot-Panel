@@ -16,9 +16,6 @@ const Inventory = () => {
     // On True it will filter the empty lists from the response...
     const [filterEmptyInventories, setFilterEmptyInventories] = useState(false)
 
-    // Set how many items per page you want!
-    const [items, setItems] = useState("")
-
 
     const [inventories, setInventories] = useState([])
     const [searchFor, setSearchFor] = useState("")
@@ -26,16 +23,14 @@ const Inventory = () => {
     const [previousPage, setPreviousPage] = useState(false)
     const [NextPage, setNextPage] = useState(false)
     const [pageNumber, setPageNumber] = useState(1)
-    // const [path, setPath] = useState("/api-data/rpg-bot/inventories/?page=4")
     const [path, setPath] = useState("/api-data/rpg-bot/inventories/")
     const [nextPageLink, setNextPageLink] = useState("")
     const [previousPageLink, setPreviousPageLink] = useState("")
+    const [pageitems, setPageitems] = useState("10")
 
     useEffect(() => {
         const FetchInventory = async () => {
             setLoading(true)
-            // HandlePath();
-            console.log(filterEmptyInventories)
             console.log(path)
             try {
                     const res = await api.get(path);
@@ -55,7 +50,7 @@ const Inventory = () => {
                         }
 
                         setInventories(res.data.results)
-                        console.log(res.data.results)
+                        // console.log(res.data.results)
                    } 
             } catch (error) {
                 console.error("Error Fetching", error)
@@ -65,17 +60,7 @@ const Inventory = () => {
         }
 
         FetchInventory();
-    }, [searchFor, filterEmptyInventories, pageNumber, path, items])
-
-    // const HandlePath = () => {
-    //     if (items) {
-    //         setPath(`/api-data/rpg-bot/inventories/?pageitems=${items}`)
-    //     }
-
-    //     if (filterEmptyInventories) {
-    //         if ()
-    //     }
-    // }
+    }, [searchFor, filterEmptyInventories, pageNumber, path, pageitems])
 
     // Set how much items per page must be rendered!
     const HandleItemsPerPage = (e:React.FormEvent<HTMLSelectElement>) => {
@@ -95,19 +80,18 @@ const Inventory = () => {
     }
 
     const HandleSearch = (e: React.FormEvent<HTMLInputElement>) => {
-        if (path.endsWith("/")) {
-            setPath(`${path}?searchfor=${e.currentTarget.value}`)
-        } else {
-            setPath(`${path}&searchfor=${e.currentTarget.value}`)
-        }
-        console.log(path)
+        setSearchFor(e.currentTarget.value)
+        // if (path.endsWith("/")) {
+        //     setPath(`${path}?searchfor=${e.currentTarget.value}`)
+        // } else {
+        //     setPath(`${path}&searchfor=${e.currentTarget.value}`)
+        // }
+        // console.log(path)
     }
 
 
     const HandleFilter = () => {
-        console.log(filterEmptyInventories)
         setFilterEmptyInventories(!filterEmptyInventories)
-        console.log(filterEmptyInventories)
         setPath(`${path}?filter=${filterEmptyInventories}`)
         console.log(path)
     }
@@ -155,7 +139,7 @@ const Inventory = () => {
                 </div>
                 <h1>RPG Bot</h1>
                 <div className="search-bar">
-                    <input type="text" className="search" placeholder="Search" autoComplete="false" onChange={(e) => {HandleSearch(e)}}></input>
+                    <input type="text" className="search" placeholder="Search" autoComplete="false" onChange={(e) => {HandleSearch(e)}} disabled></input>
                     <input type="checkbox" onChange={HandleFilter}></input>
                     <p>Filter user with no words</p>
                     <div className="fl">

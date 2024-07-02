@@ -17,11 +17,13 @@ import PersonalizedBot from './pages/personalizedBot'
 import Charts from './pages/Chart'
 import PersonalizedBotQuestion from './pages/questions'
 import PersonalizedBotAnswers from './pages/answers'
+import LuckyBotStatistics from './pages/LuckyBot/statistics'
 
 type ProfileWrapperProps = {
   activeSidebarLink: number;
 };
 function App() {
+  const { questionId } = useParams<{ questionId: string }>();
 
   function Logout() {
     localStorage.clear()
@@ -46,12 +48,13 @@ function App() {
         <Route path='/logout' element={<Logout />} ></Route>
         <Route path='/fandom-bot' element={<ProtectedRoute><Home activeSidebarLink={2} component={<FandomBot />}/></ProtectedRoute>} ></Route>
         <Route path='/lucky-bot' element={<ProtectedRoute><Home activeSidebarLink={1} component={<LuckyBot />}/></ProtectedRoute>} ></Route>
+        <Route path='/lucky-bot/statistics' element={<ProtectedRoute><Home activeSidebarLink={1} component={<LuckyBotStatistics />}/></ProtectedRoute>} ></Route>
         <Route path='/lucky-bot/profiles' element={<ProtectedRoute><Home activeSidebarLink={1} component={<TodayLuck />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot' element={<ProtectedRoute><Home activeSidebarLink={3} component={<RPGBot />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot/inventory' element={<ProtectedRoute><Home activeSidebarLink={3} component={<Inventory />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBot />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot/questions' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotQuestion />}/></ProtectedRoute>} ></Route>
-        <Route path='/personalized-bot/answers' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotAnswers />}/></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/answers/' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotAnswers />}/></ProtectedRoute>} ></Route>
         <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profiles />}></Home></ProtectedRoute>} />
         <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profile />}/></ProtectedRoute>} />
         <Route path='/profile/:number' element={<ProtectedRoute><ProfileWrapper activeSidebarLink={5}/></ProtectedRoute>} />

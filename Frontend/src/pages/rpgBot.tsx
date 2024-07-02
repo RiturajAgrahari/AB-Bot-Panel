@@ -10,18 +10,6 @@ const RPGBotDashboard = () => {
     const [totalInventories, setTotalInventories] = useState(0)
 
     useEffect(() => {
-        // const FetchTotalInventories = async () => {
-        //     try {
-        //         const res = await fetch(`${API}/api-data/rpg-bot/total_inventory/`)
-        //         if (!res.ok) {
-        //             throw new Error("Failed to fetch data!");
-        //         }
-        //         const resData = await res.json();
-        //         setTotalInventories(resData.total_inventories)
-        //     } catch (error) {
-        //         console.error("Error fetching", error)
-        //     }
-        // }
 
         const FetchTotalInventories = async () => {
             try {
