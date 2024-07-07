@@ -1,6 +1,6 @@
 import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../api";
+import api from "../../api";
 
 interface AnswersProps {
     id: number

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api";
-import "../styles/profile.css"
+import api from "../../api";
+import "../../styles/profileList.css"
 
 interface InventoriesProp {
     uid: number;

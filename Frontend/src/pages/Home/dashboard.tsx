@@ -1,5 +1,5 @@
-import BotCard from "../components/Bot";
-import "../styles/dashboard.css"
+import BotCard from "../../components/Bot";
+import "../../styles/dashboard.css"
 
 const Dashboard = () => {
     return (

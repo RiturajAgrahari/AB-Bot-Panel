@@ -1,5 +1,5 @@
-import Sidebar from "../components/sidebar";
-import "../styles/home.css";
+import Sidebar from "../../components/sidebar";
+import "../../styles/home.css";
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";

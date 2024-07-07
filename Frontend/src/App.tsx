@@ -1,23 +1,24 @@
 import './App.css'
-import Login from './pages/Login'
+import Login from './pages/Home/Login'
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom'
-import Home from './pages/Home'
+import Home from './pages/Home/Home'
 import ProtectedRoute from './components/ProtectedRoute'
-import Dashboard from './pages/dashboard'
-import NotFound from './pages/NotFound'
+import Dashboard from './pages/Home/dashboard'
+import NotFound from './pages/Home/NotFound'
 import FandomBot from './pages/fandomBot'
-import RPGBot from './pages/rpgBot'
-import Inventory from './pages/inventory'
-import Profile from './pages/EachProfile'
+import RPGBot from './pages/RPGBot/rpgBot'
+import Inventory from './pages/RPGBot/inventory'
+import Profile from './pages/Profile/profileList'
 import LuckyBot from './pages/LuckyBot/luckyBot'
 import TodayLuck from './pages/LuckyBot/today_luck'
-import Profiles from './pages/profiles'
-import UserProfile from './pages/profile'
-import PersonalizedBot from './pages/personalizedBot'
+import Profiles from './pages/Profile/profiles'
+import UserProfile from './pages/Profile/profile'
+import PersonalizedBot from './pages/PersonalizedBot/personalizedBot'
 import Charts from './pages/Chart'
-import PersonalizedBotQuestion from './pages/questions'
-import PersonalizedBotAnswers from './pages/answers'
+import PersonalizedBotQuestion from './pages/PersonalizedBot/questions'
+import PersonalizedBotAnswers from './pages/PersonalizedBot/answers'
 import LuckyBotStatistics from './pages/LuckyBot/statistics'
+import AddQuestion from './pages/PersonalizedBot/addQuestion'
 
 type ProfileWrapperProps = {
   activeSidebarLink: number;
@@ -54,6 +55,7 @@ function App() {
         <Route path='/rpg-bot/inventory' element={<ProtectedRoute><Home activeSidebarLink={3} component={<Inventory />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBot />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot/questions' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotQuestion />}/></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/questions/add-question' element={<ProtectedRoute><Home activeSidebarLink={4} component={<AddQuestion />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot/answers/' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotAnswers />}/></ProtectedRoute>} ></Route>
         <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profiles />}></Home></ProtectedRoute>} />
         <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profile />}/></ProtectedRoute>} />

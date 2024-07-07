@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 // import { API } from "../constants"
-import "../styles/inventory.css"
-import api from "../api";
+import "../../styles/inventory.css"
+import api from "../../api";
 
 interface InventoriesProp {
     achievement: string

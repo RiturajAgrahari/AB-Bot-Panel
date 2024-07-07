@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Card from "../components/Card";
+import Card from "../../components/Card";
 import { useEffect, useState } from "react";
-import api from "../api";
+import api from "../../api";
 
 const Profiles = () => {
 
