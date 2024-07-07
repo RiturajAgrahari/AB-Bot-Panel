@@ -31,7 +31,6 @@ class TodayLuck(models.Model):
 class Events(models.Model):
     id = models.BigIntegerField(verbose_name="id", primary_key=True)
     uid = models.BigIntegerField(verbose_name="uid", null=True)
-    storage = models.CharField(verbose_name="storage", max_length=100, null=True)
     letter_event = models.CharField(verbose_name="letter event", max_length=25, null=True)
 
     class Meta:
@@ -74,4 +73,26 @@ class Personalized_test_answer(models.Model):
 
     class Meta:
         db_table = "personalized_test_answer"
+        managed = False
+
+
+class Record(models.Model):
+    sn = models.BigIntegerField(verbose_name="sn", primary_key=True)
+    date = models.DateField(verbose_name="date", null=True)
+    number_of_uses = models.IntegerField(verbose_name="number_of_uses", null=True, default=0)
+
+    class Meta:
+        db_table = "record"
+        managed = False
+
+
+class BotInfo(models.Model):
+    sn = models.BigIntegerField(verbose_name="sn", primary_key=True)
+    date = models.DateField(verbose_name="date", null=True, auto_now_add=True)
+    fandom_bot = models.IntegerField(verbose_name="fandom bot", null=True, default=0)
+    lucky_bot = models.IntegerField(verbose_name="fandom bot", null=True, default=0)
+    rpg_bot = models.IntegerField(verbose_name="fandom bot", null=True, default=0)
+
+    class Meta:
+        db_table = "bot_info"
         managed = False

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Profile, TodayLuck, Events, Personalized_test_question, Personalized_test_answer
+from .models import (Profile, TodayLuck, Events, Personalized_test_question, Personalized_test_answer, Record,
+                     BotInfo, Inventory)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -20,7 +21,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "uid",
-            "storage",
             "letter_event"
         ]
 
@@ -60,4 +60,39 @@ class PersonalizedAnswersSerializer(serializers.ModelSerializer):
             "question_id",
             "answers",
             "time",
+        ]
+
+
+class TodayLuckRecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Record
+        fields = [
+            "sn",
+            "date",
+            "number_of_uses",
+        ]
+
+
+class BotInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BotInfo
+        fields = [
+            "sn",
+            "date",
+            "fandom_bot",
+            "lucky_bot",
+            "rpg_bot",
+        ]
+
+
+class InventorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inventory
+        fields = [
+            "id",
+            "uid",
+            "achievement",
+            "storage",
+            "koens",
+            "status",
         ]
