@@ -5,10 +5,12 @@ import "../styles/inventory.css"
 import api from "../api";
 
 interface InventoriesProp {
+    achievement: string
     id: number;
+    koens: number
+    status: string
     uid: number;
     storage: string;
-    letter_event: string;
 }
 
 const Inventory = () => {
@@ -50,7 +52,7 @@ const Inventory = () => {
                         }
 
                         setInventories(res.data.results)
-                        // console.log(res.data.results)
+                        console.log(res.data.results)
                    } 
             } catch (error) {
                 console.error("Error Fetching", error)
@@ -169,7 +171,7 @@ const Inventory = () => {
                         <tr>
                             <th>id</th>
                             <th>Letter Event Progress</th>
-                            {/* <th>Discord Koens</th> */}
+                            <th>Discord Koens</th>
                             <th>Profile</th>
                         </tr>
                         {inventories.map((item: InventoriesProp) => {
@@ -180,6 +182,7 @@ const Inventory = () => {
                                     <tr key={item.id}>
                                         <td>{item.id}</td>
                                         <td>{ArrangeEventLetters(item.storage)}</td>
+                                        <td>{item.koens}</td>
                                         <td className="check-profile"><Link to={`/profile/${item.uid}`} className="profile-button">check profile</Link></td>
                                     </tr>
                                 )

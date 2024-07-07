@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import api from "../api";
+import api from "../../api";
 import { Link } from "react-router-dom"
 
 const TodayLuck = () => {
@@ -55,7 +55,7 @@ const TodayLuck = () => {
                 <div className="path">
                     <Link to={"/"} className="path-link">Dashboard</Link>
                     <p>&nbsp; &gt;</p>
-                    <Link to={"/lucky_bot"} className="path-link">Lucky Bot</Link>
+                    <Link to={"/lucky-bot"} className="path-link">Lucky Bot</Link>
                     <p>&nbsp; &gt; Today Luck</p>
                 </div>
                 <h1>Lucky Bot</h1>

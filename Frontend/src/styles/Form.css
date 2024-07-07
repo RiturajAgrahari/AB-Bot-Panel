@@ -50,3 +50,40 @@
     background-color: wheat;
     color: black;
 }
+
+.LoginView .show-error {
+    visibility: visible;
+    top: -150px;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+
+.LoginView .hide-error {
+    visibility: hidden;
+    opacity: 0;
+    top: -200px;
+    transition: 0.5s;
+}
+
+.LoginView .error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    color: black;
+    padding: 15px 50px;
+    font-size: 18px;
+    background-color: rgba(223, 73, 73, 0.5);
+    border: 3px solid rgba(236, 43, 43, 0.7);
+    transition: 0.5s;
+}
+
+.LoginView .error-message svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: black;
+    margin-top: 1px;
+    margin-right: 5px;
+}

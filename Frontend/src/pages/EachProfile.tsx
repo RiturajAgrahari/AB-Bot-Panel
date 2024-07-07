@@ -101,6 +101,7 @@ const Profile = () => {
                         <tr>
                             <th>uid</th>
                             <th>Discord ID</th>
+                            <th>Discord Name</th>
                             <th>Event Used</th>
                             <th>Profile</th>
                         </tr>
@@ -109,6 +110,7 @@ const Profile = () => {
                                     <tr key={item.uid}>
                                         <td>{item.uid}</td>
                                         <td>{item.discord_id}</td>
+                                        <td>{item.name}</td>
                                         <td>{item.event_used}</td>
                                         <td className="check-profile"><Link to={`/profile/${item.uid}`} className="profile-button">check profile</Link></td>
                                     </tr>
