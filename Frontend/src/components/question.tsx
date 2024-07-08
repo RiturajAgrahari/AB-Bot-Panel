@@ -25,7 +25,7 @@ export default function Question(question: questionProps) {
                 </div>
                 <div className="question-footer">
                     <p>{question.data.time}</p>
-                    <Link to={"/personalized-bot/answers/"} className="check-asnwer-button">Check Answers</Link>
+                    <Link to={`/personalized-bot/answers/${question.data.id}`} className="check-asnwer-button">Check Answers</Link>
                 </div>
             </div>
         </div>

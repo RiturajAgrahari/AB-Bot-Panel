@@ -36,8 +36,45 @@
 
 .Add-Questions-component .add-question-form input[type=submit] {
     margin-top: 40px;
+    cursor: pointer;
 }
 
 .Add-Questions-component .add-question-form input[type=submit]:hover {
     border-color: green;
+}
+
+.Add-Questions-component .add-question-form .add-button, .question-options {
+    margin-left: 10px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 3px solid lightgray;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.Add-Questions-component .add-question-form .question-options {
+    min-width: 200px;
+    position: relative;
+}
+
+.Add-Questions-component .add-question-form svg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-right: 8px;
+}
+.Add-Questions-component .add-question-form svg:hover {
+    fill: rgb(238, 83, 83);
+}
+.Add-Questions-component .add-question-form .add-button:hover {
+    border-color: green;
+}
+
+.Add-Questions-component .add-question-form .hide-option-div {
+    display: none;
 }

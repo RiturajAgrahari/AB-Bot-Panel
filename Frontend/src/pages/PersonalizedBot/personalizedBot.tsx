@@ -3,6 +3,7 @@ import Card from "../../components/Card";
 import { useEffect, useState } from "react";
 import api from "../../api";
 
+
 function PersonalizedBot() {
 
     const [totalQuestion, setTotalQuestion] = useState(0)

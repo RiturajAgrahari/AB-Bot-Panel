@@ -1,6 +1,11 @@
 import { ReactEventHandler, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
+import "../../styles/answers.css"
+
+interface QuestionProps {
+    question_id: string
+}
 
 interface AnswersProps {
     id: number
@@ -10,9 +15,10 @@ interface AnswersProps {
     time: string
 }
 
-export default function PersonalizedBotAnswers() {
+export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
     const questionIdRef = useRef(null)
 
+    const [questionid, setQuestionid] = useState(question_id)
     const [answers, setAnswers] = useState([])
 
     const HandleSearch = async(e: React.FormEvent<HTMLInputElement>) => {
@@ -29,16 +35,17 @@ export default function PersonalizedBotAnswers() {
     useEffect(() => {
         const FetchAnswers = async() => {
             try {
-                const res = await api.get("/api-data/personalized-bot/answers/")
+                const res = await api.get(`/api-data/personalized-bot/answers/?question_id=${questionid}`)
                 if (res.status == 200) {
                     setAnswers(res.data)
+                    console.log(answers)
                 }
             } catch (error) {
                 console.error("Error Fetching", error)
             }
         }
         FetchAnswers();
-    }, [])
+    }, [questionid])
 
     return (
         <div className="Lucky-Bot">
@@ -51,7 +58,7 @@ export default function PersonalizedBotAnswers() {
             </div>
             <h1>Answers</h1>
                 <div className="search-bar">
-                    <input ref={questionIdRef} type="text" className="search" placeholder="Question ID" autoComplete="false" onChange={(e) => {HandleSearch(e)}}></input>
+                    <input ref={questionIdRef} defaultValue={questionid} type="text" className="search" placeholder="Question ID" autoComplete="false" onChange={(e) => {setQuestionid(e.target.value)}}></input>
                     <div className="fl">
                         {/* <select name="pages" className="pages" defaultValue={10} onChange={HandleItemsPerPage}>
                             <option value="10">10</option>
@@ -76,16 +83,17 @@ export default function PersonalizedBotAnswers() {
             <table>
                 <tbody>
                     <tr>
-                        <th>id</th>
+                        <th>question id</th>
                         <th>answers</th>
                         <th>time</th>
                         <th>question</th>
                         <th>profile</th>
                     </tr>
+
                     {answers.map((item: AnswersProps) => {
                         return (
                             <tr key={item.id}>
-                                <td>{item.id}</td>
+                                <td>{item.question_id}</td>
                                 <td>{item.answers}</td>
                                 <td>{item.time}</td>
                                 <td className="check-profile"><Link to={`/questions/${item.question_id}`} className="profile-button">question</Link></td>
@@ -95,6 +103,12 @@ export default function PersonalizedBotAnswers() {
                     })}
                 </tbody>
             </table>
+
+            {
+                answers.length == 0 
+                ? <div className="no-answer-error">There is no answer for this question id!</div>
+                : <div></div>
+            }
         </div>
     </div>
     )

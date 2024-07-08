@@ -24,11 +24,18 @@ type ProfileWrapperProps = {
   activeSidebarLink: number;
 };
 function App() {
-  const { questionId } = useParams<{ questionId: string }>();
-
   function Logout() {
     localStorage.clear()
     return <Navigate to="/login" />
+  }
+
+  const AnswerWrapper = ({activeSidebarLink}: ProfileWrapperProps) => {
+    const {number} = useParams();
+    console.log(number)
+    if (!number) {
+      return <div>Error: There is error in this question!</div>;
+    }
+    return  <Home activeSidebarLink={activeSidebarLink} component={<PersonalizedBotAnswers question_id={number} />} />;
   }
 
   const ProfileWrapper = ({ activeSidebarLink }: ProfileWrapperProps) => {
@@ -56,7 +63,8 @@ function App() {
         <Route path='/personalized-bot' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBot />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot/questions' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotQuestion />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot/questions/add-question' element={<ProtectedRoute><Home activeSidebarLink={4} component={<AddQuestion />}/></ProtectedRoute>} ></Route>
-        <Route path='/personalized-bot/answers/' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBotAnswers />}/></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/answers/' element={<ProtectedRoute> <Home activeSidebarLink={4} component={<PersonalizedBotAnswers question_id={""} />} /></ProtectedRoute>} ></Route>
+        <Route path='/personalized-bot/answers/:number' element={<ProtectedRoute><AnswerWrapper activeSidebarLink={4}/></ProtectedRoute>} ></Route>
         <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profiles />}></Home></ProtectedRoute>} />
         <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profile />}/></ProtectedRoute>} />
         <Route path='/profile/:number' element={<ProtectedRoute><ProfileWrapper activeSidebarLink={5}/></ProtectedRoute>} />
