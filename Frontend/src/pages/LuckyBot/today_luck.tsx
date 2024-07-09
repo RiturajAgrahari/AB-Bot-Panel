@@ -89,6 +89,7 @@ const TodayLuck = () => {
                             <th >Profile</th>
                         </tr>
                         {todayLuck.map((item: TodayluckProps) => {
+                            console.log(todayLuck)
                             return (
                                 <tr key={item.uid}>
                                     <td>{item.uid}</td>

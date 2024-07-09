@@ -19,6 +19,7 @@ export default function PersonalizedBotQuestion() {
 
     useEffect(() => {
         const FetchQuestions = async() => {
+            console.log("sending request")
             try {
                 const res = await api.get("/api-data/personalized-bot/questions/")
                 if (res.status == 200) {
