@@ -1,14 +1,15 @@
+import cloudinary.uploader
 from django.db.models import Q
 from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
-from django.db.models import Sum
 from rest_framework import generics, mixins, permissions, authentication
 
 from rest_framework.pagination import PageNumberPagination
 
+from .forms import PersonalizedTestQuestion
 from .models import Profile, TodayLuck, Events, Inventory, Personalized_test_question, Personalized_test_answer, Record, BotInfo
 from .serializers import (ProfileSerializer, EventSerializer, TodayLuckSerializer, PersonalizedQuestionsSerializers,
                           PersonalizedAnswersSerializer, TodayLuckRecordSerializer, BotInfoSerializer,
@@ -132,6 +133,26 @@ class TodayLuckMixinView(
         return self.list(request, *args, **kwargs)
 
 
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def today_luck(request, *args, **kwargs):
+    queryset = TodayLuck.objects
+    search_query = request.query_params.get("search", None)
+    search_category = request.query_params.get("category", None)
+
+    if search_category and search_query:
+        queryset = queryset.filter(**{f"{search_category}__icontains": search_query})
+        serialized_data = TodayLuckSerializer(queryset, many=True)
+        print(len(serialized_data.data))
+        if serialized_data:
+            return Response(serialized_data.data)
+
+    serialized_data = TodayLuckSerializer(queryset.all(), many=True)
+    if serialized_data:
+        return Response(serialized_data.data)
+
+
 class ProfilesMixinView(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
@@ -193,14 +214,55 @@ class PersonalizedQuestions(
     mixins.ListModelMixin,
     generics.GenericAPIView
 ):
-    queryset = Personalized_test_question.objects.all()
+    queryset = Personalized_test_question.objects.all()[::-1]
     serializer_class = PersonalizedQuestionsSerializers
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
 
+    def list(self, request, *args, **kwargs):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
+        serializer = PersonalizedQuestionsSerializers(queryset, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+
     def get(self, request, *args, **kwargs):
+        print("i am getting called!")
+        # pressing ctrl + s
         return self.list(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        title = request.data.get("title")
+        description = request.data.get("description")
+        type = request.data.get("questiontype")
+        date_time = request.data.get("time")
+        for filename, file in request.FILES.items():
+            image = request.FILES[filename].file
+
+        cloudinary_response = cloudinary.uploader.upload(image, folder="BotPanel", unique_filename=True,
+                                                         overwrite=False)
+        print("image uploaded successfully!")
+        image_url = cloudinary_response['url']
+
+        form = PersonalizedTestQuestion(
+            {"title": title, "description": description, "image": image_url, "type": type, "time": date_time})
+        if form.is_valid():
+            print(form.is_valid())
+            form.save()
+        print(form.errors)
+
+        return Response({"data": "i got your response bro"})
+
+
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def PersonalizedQuestionsTwo(request, *args, **kwargs):
+    queryset = Personalized_test_question.objects.all()[::-1]
+    serialized_data = PersonalizedQuestionsSerializers(queryset, many=True)
+    if serialized_data:
+        return Response(serialized_data.data)
 
 class PersonalizedAnswers(
     mixins.ListModelMixin,
@@ -273,16 +335,3 @@ def CheckProfile(request, *args, **kwargs):
     print(profile_information)
 
     return Response(profile_information)
-
-
-@api_view(["POST"])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def AddQuestion(request, *args, **kwargs):
-    print(request.data)
-    title = request.data.get("title")
-    description = request.data.get("description")
-    image = request.data.get("image")
-    type = request.data.get("type")
-    time = request.data.get("time")
-    return Response({"data": "i got your response bro"})
