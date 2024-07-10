@@ -2,8 +2,6 @@ dist
 dist-ssr
 *.local
 
-Backend2
-
 # .env od backend DRF
 **.env
 
