@@ -1,0 +1,66 @@
+.login-page {
+    position: relative;
+    background-color: black;
+    height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    transition: 0.5s;
+}
+
+.login-page .div-login-form {
+    position: absolute;
+    top: calc(35%);
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.login-page .panel-servers {
+    position: absolute;
+    top: calc(50% - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 30px;
+    padding: 50px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    background-color: rgba(60, 55, 55, 0.3);
+    backdrop-filter: blur(5px);
+    transition: 0.5s;
+}
+
+
+.login-page .panel-servers .panel-image {
+    width: 70px;
+    height: 70px;
+    border: 3px solid rgb(90, 89, 89) ;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-page .panel-servers .hovered {
+    transform: scale(1.15);
+    box-shadow: 0 0 10px 2px white;
+}
+
+.login-page .panel-servers .panel-image img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: fill ;
+    box-sizing: border-box;
+}
+
+.login-page .panel-servers .panel-image:hover {
+    box-shadow: 0 0 10px 2px white;
+}
+

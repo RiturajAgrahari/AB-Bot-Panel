@@ -23,6 +23,14 @@ def testfun(request):
 
 
 @api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def user_panel(request, *args, **kwargs):
+    user = request.user.username
+    print(user)
+
+
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 @authentication_classes([authentication.SessionAuthentication, JWTAuthentication])
 def total_today_luck(request, *args, **kwargs):

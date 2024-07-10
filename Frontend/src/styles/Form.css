@@ -1,24 +1,24 @@
 .LoginView {
-    background-image: url("../static/background-2.jpg");
     width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: 0;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-form {
+.LoginView .login-form {
+    width: 400px;
+    /* height: 500px; */
     background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
     backdrop-filter: blur(10px);
+    border-radius: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-direction: column;
     color: wheat;
-    padding: 50px;
+    padding-top: 50px;
+    box-sizing: border-box;
 }
 
 .login-form h1 {
@@ -27,13 +27,17 @@
 
 .login-form input {
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid gray;
+    border: 1px solid wheat;
     font-size: 16px;
     padding: 10px;
     margin-bottom: 20px;
     outline: none;
     color: wheat;
     width: 70%;
+}
+
+::placeholder {
+    color: wheat;
 }
 
 .login-form button {
@@ -44,6 +48,7 @@
     border: 1px solid wheat;
     padding: 10px;
     transition: 0.3s;
+    margin-bottom: 70px;
 }
 
 .login-form button:hover {
