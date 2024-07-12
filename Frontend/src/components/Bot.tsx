@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Bot.css"
 
 interface BotCardProps {
@@ -6,14 +6,12 @@ interface BotCardProps {
     BotPID: number;
     status: boolean;
     pfp: string;
+    link: string;
 }
 
 function BotCard(props: BotCardProps) {
-    const [css, setCss] = useState("")
-
     return (
-        
-        <div className="Bot-Card">
+        <Link to={props.link} className="Bot-Card">
             <div className="bot-pfp" style={{backgroundColor: "rgb(0, 0, 0)"}}>
                 <img src={props.pfp} alt={props.BotName} />
                 <span className="bot-status" style={{backgroundColor: props.status ? "rgb(35, 165, 95)": "red"}}></span>
@@ -22,7 +20,7 @@ function BotCard(props: BotCardProps) {
                 <p className="bot-name">{props.BotName}</p>
                 <p className="bot-pid">{props.BotPID}</p>
             </div>
-        </div>
+        </Link>
     )
 }
 

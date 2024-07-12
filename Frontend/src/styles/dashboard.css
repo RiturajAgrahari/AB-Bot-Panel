@@ -1,15 +1,14 @@
-.active-component-header .path {
-    color: gray;
-    display: flex;
-    text-transform: capitalize;
+.Dashboard {
+    box-sizing: border-box;
+    padding: 0 20px;
 }
 
-.active-component-header .path .path-link {
-    text-decoration: underline;
-    color: gray;
-    text-transform: capitalize;
+.Dashboard .Bots {
+    padding-left: 20px;
 }
 
-.active-component-header h1 {
-    text-transform: uppercase;
+@media only screen and (max-width: 600px) {
+    .Dashboard .Bots {
+        padding-left: 0;
+    }
 }

@@ -78,3 +78,14 @@
 .Add-Questions-component .add-question-form .hide-option-div {
     display: none;
 }
+
+@media only screen and (max-width: 700px) {
+    .Add-Questions-component .add-question-form input, textarea, select, option {
+        width: 100%;
+    }
+
+    .Add-Questions-component .add-question-form {
+        padding-left: 20px;
+    }
+    
+}

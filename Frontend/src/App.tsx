@@ -68,7 +68,7 @@ function App() {
         <Route path='/profiles' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profiles />}></Home></ProtectedRoute>} />
         <Route path='/profiles/profile' element={<ProtectedRoute><Home activeSidebarLink={5} component={<Profile />}/></ProtectedRoute>} />
         <Route path='/profile/:number' element={<ProtectedRoute><ProfileWrapper activeSidebarLink={5}/></ProtectedRoute>} />
-        <Route path='/charts' element={<ProtectedRoute><Home activeSidebarLink={8} component={<Charts />} /></ProtectedRoute>} />
+        <Route path='/charts' element={<ProtectedRoute><Home activeSidebarLink={7} component={<Charts />} /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>

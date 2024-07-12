@@ -1,5 +1,5 @@
 .Bot-Card {
-    margin: 40px 10px;
+    margin: 40px 0;
     box-shadow: 0px 0px 3px #181818;
     border-radius: 10px;
     background-color: white;
@@ -10,26 +10,34 @@
     align-items: center;
     transition: 0.2s;
     position: relative;
+    box-sizing: border-box;
+    text-decoration: none;
 }
 
 .Bot-Card .bot-pfp {
+    position: relative;
     border: 3px solid gray;
     width: 50px;
     height: 50px;
-    object-fit: contain;
     border-radius: 50%;
-    overflow: hidden;
     margin-right: 10px;
-    display: block;   
     background-color: rgb(49, 51, 56);
     padding: 5px;
+}
+
+.Bot-Card .bot-pfp img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 .Bot-Card .bot-pfp .bot-status {
     position: absolute;
     content: "";
-    left: 14%;
-    bottom: 14%;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
     border-radius: 50%;
     width: 15px;
     height: 15px;
@@ -38,24 +46,30 @@
     display: flex;
 }
 
-.Bot-Card .bot-pfp img {
-    width: 100%;
-    height: 100%;
-}
-
 .Bot-Card .bot-info .bot-name {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
     line-height: 18px;
 }
 
 .Bot-Card .bot-info .bot-pid {
     font-size: 12px;
-    font-weight: 600;
+    letter-spacing: 0.5px;
     color: gray;
     line-height: 18px;
 }
 
 .Bot-Card:hover {
     box-shadow: 0 0 6px 1px #181818;    
+}
+
+@media only screen and (max-width : 1300px) {
+     .Bot-Card {
+        width: 70%;
+     }
+}
+
+@media only screen and (max-width: 1000px) {
+    .Bot-Card {
+        width: 100%;
+    }
 }

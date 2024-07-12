@@ -1,4 +1,5 @@
 .LoginView {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -8,7 +9,6 @@
 
 .LoginView .login-form {
     width: 400px;
-    /* height: 500px; */
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 10px;
@@ -56,39 +56,99 @@
     color: black;
 }
 
-.LoginView .show-error {
-    visibility: visible;
-    top: -150px;
-    opacity: 1;
-    transition: 0.5s;
-}
-
-
-.LoginView .hide-error {
+.LoginView .toast {
+    position: absolute;
+    top: -17%;
+    left: 0;
     visibility: hidden;
     opacity: 0;
-    top: -200px;
-    transition: 0.5s;
+    border-radius: 12px;
+    background: #fff;
+    z-index: 10;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
 }
 
-.LoginView .error-message {
+.LoginView .toast.active {
+    visibility: visible;
+    opacity: 1;
+    left: -57%;
+}   
+
+.LoginView .toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.LoginView .toast-content .check {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    color: black;
-    padding: 15px 50px;
-    font-size: 18px;
-    background-color: rgba(223, 73, 73, 0.5);
-    border: 3px solid rgba(236, 43, 43, 0.7);
-    transition: 0.5s;
+    height: 35px;
+    min-width: 35px;
+    background-color: #f44040;
+    fill: #fff;
+    font-size: 20px;
+    border-radius: 50%;
 }
 
-.LoginView .error-message svg {
+.LoginView .toast-content .message {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    fill: black;
-    margin-top: 1px;
-    margin-right: 5px;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.LoginView .message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+}
+  
+.LoginView .message .text.text-1 {
+    font-weight: 600;
+    color: #333;
+}
+  
+.LoginView .toast .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+  
+.LoginView .toast .close:hover {
+    opacity: 1;
+}
+  
+.LoginView .toast .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+}
+  
+.LoginView .toast .progress::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4070f4;
+}
+  
+.LoginView .toast .progress.active::before {
+    animation: progress 5s linear forwards;
+}
+  
+@keyframes progress {
+    100% {
+      right: 100%;
+    }
 }

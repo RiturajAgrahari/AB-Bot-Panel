@@ -1,5 +1,22 @@
+@font-face {
+  font-family: "refrigerator_deluxe_bold";
+  src: url('src/static/refrigerator_deluxe_bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "refrigerator_deluxe_regular";
+  src: url('src/static/refrigerator_deluxe_regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'refrigerator_deluxe_bold', serif;
+
   line-height: 1.5;
   font-weight: 400;
 

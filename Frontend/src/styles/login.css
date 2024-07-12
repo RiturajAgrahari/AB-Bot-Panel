@@ -11,6 +11,7 @@
     background-position: center center;
     background-size: cover;
     transition: 0.5s;
+    overflow: hidden;
 }
 
 .login-page .div-login-form {

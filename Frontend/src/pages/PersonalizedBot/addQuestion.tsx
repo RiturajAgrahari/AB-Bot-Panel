@@ -72,7 +72,7 @@ const AddQuestion = () => {
     }
 
     return (
-        <div className="Add-Questions-component">
+        <div className="Add-Questions-component Bot">
         <div className="active-component-header">
             <div className="path">
                 <Link to={"/"} className="path-link">Dashboard</Link>

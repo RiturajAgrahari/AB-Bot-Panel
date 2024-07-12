@@ -1,11 +1,9 @@
 import Form from "../../components/Form";
 import "../../styles/login.css"
 import ab from "../../static/ab.png"
-import teot from "../../static/teot.png"
-import aoem from "../../static/aoem.png"
-import oh from "../../static/oh.png"
+// import teot from "../../static/teot.png"
+// import oh from "../../static/oh.png"
 import abbg from "../../static/background-2.jpg"
-import aoembg from  "../../static/aoembg.png"
 import teotbg from  "../../static/teotbg.png"
 import ohbg from  "../../static/ohbg.jpg"
 import { useRef, useState } from "react";
@@ -21,7 +19,7 @@ function Login() {
 
     const handleABbackground = (n: number) => {
         setHovered(n)
-        const backgrounds = [abbg, teotbg, aoembg, ohbg]
+        const backgrounds = [abbg, teotbg, ohbg]
         if (backgroundImage.current) {
             backgroundImage.current.style.backgroundImage = `none`
             backgroundImage.current.style.backgroundImage = `url("${backgrounds[n]}")`
@@ -51,15 +49,12 @@ function Login() {
                 <div className={hovered == 0 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(0)}} onClick={() => handleShowForm()}>
                     <img src={ab} alt="ab" />
                 </div>
-                <div className={hovered == 1 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(1)}} onClick={() => handleShowForm()}>
+                {/* <div className={hovered == 1 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(1)}} onClick={() => handleShowForm()}>
                     <img src={teot} alt="teot" />
-                </div>
-                <div className={hovered == 2 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(2)}} onClick={() => handleShowForm()}>
-                    <img src={aoem} alt="aoem" />
-                </div>
-                <div className={hovered == 3 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(3)}} onClick={() => handleShowForm()}>
+                </div> */}
+                {/* <div className={hovered == 2 ? "panel-image hovered": "panel-image"} onMouseOver={() =>{handleABbackground(2)}} onClick={() => handleShowForm()}>
                     <img src={oh} alt="oh" />
-                </div>
+                </div> */}
             </div>
             <div className="div-login-form" ref={divLoginForm}>
                 <Form route="/api/token/" method="login"/>
