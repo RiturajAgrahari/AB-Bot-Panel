@@ -152,7 +152,6 @@ def today_luck(request, *args, **kwargs):
     if search_category and search_query:
         queryset = queryset.filter(**{f"{search_category}__icontains": search_query})
         serialized_data = TodayLuckSerializer(queryset, many=True)
-        print(len(serialized_data.data))
         if serialized_data:
             return Response(serialized_data.data)
 
@@ -227,18 +226,6 @@ class PersonalizedQuestions(
     permission_classes = [IsAuthenticated]
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
 
-    def list(self, request, *args, **kwargs):
-        # Note the use of `get_queryset()` instead of `self.queryset`
-        queryset = self.get_queryset()
-        serializer = PersonalizedQuestionsSerializers(queryset, many=True)
-        print(serializer.data)
-        return Response(serializer.data)
-
-    def get(self, request, *args, **kwargs):
-        print("i am getting called!")
-        # pressing ctrl + s
-        return self.list(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         print(request.data)
         title = request.data.get("title")
@@ -284,7 +271,6 @@ class PersonalizedAnswers(
     def get(self, request, *args, **kwargs):
         question_id = request.query_params.get("question_id")
         if question_id:
-            print(question_id)
             queryset = self.queryset.filter(question_id__iexact=int(question_id))
             serialized_data = PersonalizedAnswersSerializer(queryset, many=True).data
             return Response(serialized_data)
@@ -313,8 +299,16 @@ def LuckyBotRecord(request, *args, **kwargs):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def BotInformation(request, *args, **kwargs):
+    recordLimit = request.query_params.get("recordlimit")
+    print(recordLimit)
     queryset = BotInfo.objects.all()
     serialized_data = BotInfoSerializer(queryset, many=True).data
+    if recordLimit:
+        if recordLimit == "month":
+            return Response(data=serialized_data[len(serialized_data) - 30: len(serialized_data)])
+        elif recordLimit == "week":
+            return Response(data=serialized_data[len(serialized_data) - 7: len(serialized_data)])
+
     return Response(data=serialized_data)
 
 
@@ -324,7 +318,6 @@ def BotInformation(request, *args, **kwargs):
 def CheckProfile(request, *args, **kwargs):
     profile_information = {}
     uid = request.query_params.get("uid")
-    print(uid)
     profile_data = Profile.objects.filter(uid__iexact=uid)
     serialized_profile_data = ProfileSerializer(profile_data, many=True).data
     if serialized_profile_data:
@@ -339,7 +332,5 @@ def CheckProfile(request, *args, **kwargs):
     serialized_today_luck_data = TodayLuckSerializer(today_luck_data, many=True).data
     if serialized_today_luck_data:
         profile_information.update(serialized_today_luck_data[0])
-
-    print(profile_information)
 
     return Response(profile_information)
