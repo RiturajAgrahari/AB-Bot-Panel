@@ -62,6 +62,36 @@ function Form({route, method}: FormProps) {
         }
     }
 
+    const handleGuestLogin = async () => {
+        // setLoading(true)
+        // e.preventDefault()
+        
+        try {
+            const res = await api.post(route, {username:"Guest", password:"guest12345"})
+            if (method == "login") {
+                localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                navigate("/")
+            } else {
+                navigate("/login")
+            }
+        } catch(error) {
+            if (error instanceof AxiosError){
+                if (error.response?.status == 401) {
+                    setError("Guests are not allowed anymore!")
+                    handleError();
+                } else {
+                    alert(error);
+                }
+            } else {
+                alert(error);
+            }
+                  
+        } finally {
+            // setLoading(false)
+        }
+    }
+
     return (
         <div className="LoginView">
             <div ref={errorMessage} className="toast">
@@ -80,6 +110,7 @@ function Form({route, method}: FormProps) {
                 <input type="text" name="username" id="username" onChange={(event) => setUsername(event.target.value)} placeholder="username" value={username} required/>
                 <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" value={password} required/>
                 <button type="submit">Login</button>
+                <a href="#" onClick={handleGuestLogin}>are you a guest? Click here</a>
             </form>
         </div>
     )

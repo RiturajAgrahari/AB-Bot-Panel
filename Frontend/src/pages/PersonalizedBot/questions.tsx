@@ -67,16 +67,16 @@ export default function PersonalizedBotQuestion() {
             </div>
             <h1>Questions</h1>
         </div>
-            <div className="add-question-div">
-                <Link to={"add-question"} className="add-question-button">Add Question</Link>
-            </div>
-            <div className="card-container" style={{display: "block"}}>
-                        {questions.map((item: QuestionsProps) => {
-                            return (
-                                <Question data={item} />
-                            )
-                        })}
-            </div>
+        <div className="add-question-div">
+            <Link to={"add-question"} className="add-question-button">Add Question</Link>
         </div>
+        <div className="card-container" style={{display: "block"}}>
+                    {questions.map((item: QuestionsProps) => {
+                        return (
+                            <Question data={item} />
+                        )
+                    })}
+        </div>
+    </div>
     )
 }

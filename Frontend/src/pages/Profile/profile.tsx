@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 import "../../styles/profile.css"
+import { AxiosError } from "axios";
 
 interface ProfileProps {
     profile_uid: string;
@@ -26,6 +27,7 @@ interface ProfileDataProps {
 const UserProfile = ({profile_uid}: ProfileProps) => {
 
     const [profileInfo, setProfileInfo] = useState<ProfileDataProps>()
+    const [errorAccessMessage, setErrorAccessMessage] = useState("")
 
     const alertMessage = useRef<HTMLDivElement>(null)
 
@@ -71,8 +73,18 @@ const UserProfile = ({profile_uid}: ProfileProps) => {
                     setProfileInfo(res.data)
                 }
             } catch (error) {
-                handleShowAlertMessage();
-                console.error("Error Fetching", error)
+                if (error instanceof AxiosError){
+                    if (error.response?.status == 401) {
+                        setErrorAccessMessage("Guests are not allowed to check the profile!")
+                        handleShowAlertMessage();
+                    } else {
+                        handleShowAlertMessage();
+                        console.error("Error Fetching", error)
+                    }
+                } else {
+                    handleShowAlertMessage();
+                    console.error("Error Fetching", error)
+                }
             }
         }
 
@@ -83,6 +95,7 @@ const UserProfile = ({profile_uid}: ProfileProps) => {
         if (alertMessage.current) {
             alertMessage.current.style.display = "none"    
         }
+        setErrorAccessMessage("Fetching the data!")
     }
 
     const handleShowAlertMessage = () => {
@@ -98,7 +111,7 @@ const UserProfile = ({profile_uid}: ProfileProps) => {
                 <div className="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
                 </div>
-                <strong>Error!</strong> Fetching the data!
+                <strong>Error!</strong> {errorAccessMessage}
             </div> 
             <h1>UID {profile_uid} :</h1>
             <div className="profile-info">

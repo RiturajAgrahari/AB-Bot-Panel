@@ -48,7 +48,13 @@
     border: 1px solid wheat;
     padding: 10px;
     transition: 0.3s;
-    margin-bottom: 70px;
+}
+
+.login-form a {
+    text-decoration: none;
+    color: wheat;
+    margin-top: 5px;
+    /* margin-bottom: 70px; */
 }
 
 .login-form button:hover {

@@ -53,6 +53,7 @@ const Inventory = () => {
                         }
 
                         setInventories(res.data.results)
+                        console.log(res.data)
                    } 
             } catch (error) {
                 handleShowAlertMessage();
