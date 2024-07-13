@@ -67,6 +67,10 @@
     margin-left: 50px;
 }
 
+.Bot .chart canvas{
+    max-height: 500px;
+}
+
 /* Lucky Bot Table Page */
 
 .Bot .search-for, .Bot .pages {
