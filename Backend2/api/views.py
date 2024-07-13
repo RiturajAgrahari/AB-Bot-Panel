@@ -41,7 +41,7 @@ def total_today_luck(request, *args, **kwargs):
         'total_today_luck': total_today_luck,
     }
 
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         return Response(data)
     else:
         return Response({'total_today_luck': "100"})
@@ -61,7 +61,7 @@ def TotalEventsView(request, *args, **kwargs):
         'total_inventories': total_inventories,
     }
 
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         return Response(data)
     else:
         return Response({'total_inventories': "100"})
@@ -84,7 +84,7 @@ class EventsMixinView(
 
     def get(self, request, *args, **kwargs):
 
-        if request.user == "Arena":
+        if str(request.user) == "Arena":
 
             # Setting up how many items must be sent in each page!
             page_items = request.query_params.get("pageitems", 10)
@@ -158,7 +158,7 @@ class TodayLuckMixinView(
     lookup_field = "uid"
 
     def get(self, request, *args, **kwargs):
-        if request.user == "Arena":
+        if str(request.user) == "Arena":
             search_query = request.query_params.get("search", None)
             search_category = request.query_params.get("category", None)
 
@@ -204,7 +204,7 @@ class ProfilesMixinView(
     PageNumberPagination.page_size = 20
 
     def get(self, request, *args, **kwargs):
-        if request.user == "Arena":
+        if str(request.user) == "Arena":
             uid = kwargs.get("uid")
 
             page_items = request.query_params.get("pageitems", 10)
@@ -237,7 +237,7 @@ def TotalProfilesView(request, *args, **kwargs):
     """
     DRF api view
     """
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         instances = Profile.objects.all()
         total_profiles = instances.count() if instances else 0
         data = {
@@ -253,7 +253,7 @@ def TotalProfilesView(request, *args, **kwargs):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def TotalPersonalizedView(request, *args, **kwargs):
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         question_instances = Personalized_test_question.objects.all()
         answer_instances = Personalized_test_answer.objects.all()
 
@@ -277,7 +277,7 @@ class PersonalizedQuestions(
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
 
     def post(self, request, *args, **kwargs):
-        if request.user == "Arena":
+        if str(request.user) == "Arena":
             print(request.data)
             title = request.data.get("title")
             description = request.data.get("description")
@@ -307,7 +307,7 @@ class PersonalizedQuestions(
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def PersonalizedQuestionsTwo(request, *args, **kwargs):
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         queryset = Personalized_test_question.objects.all()[::-1]
         serialized_data = PersonalizedQuestionsSerializers(queryset, many=True)
         if serialized_data:
@@ -329,7 +329,7 @@ class PersonalizedAnswers(
     authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
 
     def get(self, request, *args, **kwargs):
-        if request.user == "Arena":
+        if str(request.user) == "Arena":
             question_id = request.query_params.get("question_id")
             if question_id:
                 queryset = self.queryset.filter(question_id__iexact=int(question_id))
@@ -358,7 +358,7 @@ class PersonalizedAnswers(
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def LuckyBotRecord(request, *args, **kwargs):
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         recordLimit = request.query_params.get("recordlimit")
         queryset = Record.objects.all().exclude(date=None)
         serialized_data = TodayLuckRecordSerializer(queryset, many=True).data
@@ -386,7 +386,7 @@ def LuckyBotRecord(request, *args, **kwargs):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def BotInformation(request, *args, **kwargs):
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         recordLimit = request.query_params.get("recordlimit")
         queryset = BotInfo.objects.all()
         serialized_data = BotInfoSerializer(queryset, many=True).data
@@ -414,7 +414,7 @@ def BotInformation(request, *args, **kwargs):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def CheckProfile(request, *args, **kwargs):
-    if request.user == "Arena":
+    if str(request.user) == "Arena":
         profile_information = {}
         uid = request.query_params.get("uid")
         profile_data = Profile.objects.filter(uid__iexact=uid)
