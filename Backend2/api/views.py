@@ -32,7 +32,7 @@ def user_panel(request, *args, **kwargs):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-@authentication_classes([authentication.SessionAuthentication, JWTAuthentication])
+@authentication_classes([JWTAuthentication])
 def total_today_luck(request, *args, **kwargs):
     instances = TodayLuck.objects.all()
     total_today_luck = instances.count() if instances else 0
@@ -75,7 +75,7 @@ class EventsMixinView(
     queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = PageNumberPagination
     lookup_field = 'id'
     PageNumberPagination.page_size = 20
@@ -154,7 +154,7 @@ class TodayLuckMixinView(
     queryset = TodayLuck.objects.all()
     serializer_class = TodayLuckSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     lookup_field = "uid"
 
     def get(self, request, *args, **kwargs):
@@ -197,8 +197,8 @@ class ProfilesMixinView(
 ):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     lookup_field = 'uid'
     pagination_class = PageNumberPagination
     PageNumberPagination.page_size = 20
@@ -274,7 +274,7 @@ class PersonalizedQuestions(
     queryset = Personalized_test_question.objects.all()[::-1]
     serializer_class = PersonalizedQuestionsSerializers
     permission_classes = [IsAuthenticated]
-    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
 
     def post(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
@@ -326,7 +326,7 @@ class PersonalizedAnswers(
     queryset = Personalized_test_answer.objects.all()
     serializer_class = PersonalizedAnswersSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [authentication.SessionAuthentication, JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
