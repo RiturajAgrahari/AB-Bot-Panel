@@ -13,16 +13,15 @@
 }
 
 :root {
-<<<<<<< HEAD
 
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'refrigerator_deluxe_bold', serif;
 
-=======
+
   --abfont: #ffffff
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
->>>>>>> 4ebfde43a3f48732a67457ca9dcc5d04d6a3ebba
+
   line-height: 1.5;
   font-weight: 400;
 
