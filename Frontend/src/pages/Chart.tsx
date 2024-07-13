@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import { BarElement, CategoryScale, ChartData, Legend, LinearScale, Tooltip } from "chart.js";
+import { BarElement, CategoryScale, Legend, LinearScale, Tooltip } from "chart.js";
 import api from "../api";
 import "../styles/home.css"
 
@@ -22,7 +22,7 @@ interface BotInfoProps {
 
 function Charts() {
 
-    const [record, setRecord] = useState([])
+    // const [record, setRecord] = useState([])
     const [activeButton, setActiveButton] = useState(2)
     const [recordLimit, setRecordLimit] = useState<string>("all")
 
@@ -45,7 +45,7 @@ function Charts() {
             try {
                 const res = await api.get(`/api-data/bots/usage-information/?recordlimit=${recordLimit}`)
                 if (res.status == 200) {
-                    setRecord(res.data)
+                    // setRecord(res.data)
                     setChartData({
                         labels: res.data.map((data: BotInfoProps) => data.date),
                         datasets: [
@@ -90,18 +90,18 @@ function Charts() {
         {id: 4, year: 2019, userGain: 90000, userLost: 4555},
         {id: 5, year: 2020, userGain: 4300, userLost: 234}];
 
-    interface ChartDataDatasetElementProps {
-        label: string
-        data: number[] | string[]
-        backgroundColor: string[]
-        borderColor: string
-        borderWidth: number
-    }
+    // interface ChartDataDatasetElementProps {
+    //     label: string
+    //     data: number[] | string[]
+    //     backgroundColor: string[]
+    //     borderColor: string
+    //     borderWidth: number
+    // }
 
-    interface ChartDataProps {
-        labels: number[] | string[]
-        datasets: Chart[]
-    }
+    // interface ChartDataProps {
+    //     labels: number[] | string[]
+    //     datasets: Chart[]
+    // }
 
     const [chartData, setChartData] = useState({
         labels: Data.map((data) => data.year), 

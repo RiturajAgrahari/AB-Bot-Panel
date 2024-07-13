@@ -16,7 +16,7 @@ interface RecordProps {
 
 const LuckyBotStatistics = () => {
 
-    const [record, setRecord] = useState([])
+    // const [record, setRecord] = useState([])
     const [activeButton, setActiveButton] = useState(2)
     const [recordLimit, setRecordLimit] = useState<string>("all")
 
@@ -52,7 +52,7 @@ const LuckyBotStatistics = () => {
             try {
                 const response = await api.get(`/api-data/lucky-bot/records/?recordlimit=${recordLimit}`)
                 if (response.status == 200) {
-                    setRecord(response.data)
+                    // setRecord(response.data)
                     setChartData({
                         labels: response.data.map((data:RecordProps)=> data.date),
                         datasets: [
