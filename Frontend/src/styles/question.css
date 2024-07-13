@@ -3,6 +3,7 @@
     margin: 10px 0;
     padding: 25px;
     display: flex;
+    width: 100%;
 }
 
 .question-component .question-image {
@@ -40,7 +41,6 @@
 
 .question-component .question-data .question-footer {
     display: flex;
-    /* gap: 20px; */
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -65,4 +65,52 @@
 .question-component .question-data .question-footer p {
     color: gray;
     font-weight: 500;
+}
+
+@media only screen and (max-width: 1150px) {
+    .question-component .question-data .question-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .question-component .question-image {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .question-component .question-image img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .question-component {
+        flex-direction: column;
+    }
+}
+
+.add-question-div {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.add-question-div .add-question-button{
+    background-color: rgba(64, 231, 64, 0.3);
+    border-color: rgba(64, 231, 64, 0.7);
+    border-width: 3px;
+    outline: none;
+    border-style: solid;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.add-question-div .add-question-button:focus {
+    color: black;
 }

@@ -39,8 +39,10 @@ SECRET_KEY = 'django-insecure-u$h1vnybddyn%3^jw6h7wx7$rkt(sy7w$@os)#fco_q6h#t=^e
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["botpanelapi.rituraj-agrahari.com", '64.176.68.68']
 
 
 # Application definition
@@ -141,12 +143,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = "/srv/http/botpanel/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  # Add the origin of your React app
+    'https://botpanel.rituraj-agrahari.com'
 ]
 
 # Optional: Allow credentials (cookies, authorization headers, etc.) to be sent
@@ -154,6 +158,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_TRUSTED_ORIGINS = [
     'http://localhost:5173',  # Add the origin of your React app
+    'https://botpanel.rituraj-agrahari.com'
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

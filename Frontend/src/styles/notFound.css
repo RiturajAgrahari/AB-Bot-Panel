@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "refrigerator_deluxe_bold";
+    src: url('../../src/static/refrigerator_deluxe_bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.not-found {
+    background-color: #181818;
+    color: rgb(211, 208, 208);
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-size: 40px;
+    font-family: 'refrigerator_deluxe_bold', serif;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.not-found .go-home {
+    color: rgb(211, 208, 208);
+    text-decoration: none;
+    border: 2px solid rgb(211, 208, 208);
+    padding: 5px 20px;
+    margin-top: 30px;
+    transition: 0.5s;
+}
+
+.not-found .go-home:hover {
+    background-color: rgb(211, 208, 208);
+    color: #181818;
+}

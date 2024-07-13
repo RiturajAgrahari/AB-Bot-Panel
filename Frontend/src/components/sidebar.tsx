@@ -1,5 +1,5 @@
 import "../styles/sidebar.css"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom'
 
 interface SidebarProps {
@@ -7,18 +7,62 @@ interface SidebarProps {
 }
 
 function Sidebar(props:SidebarProps) {
+
+    const sidebar = useRef<HTMLDivElement>(null)
+
     const [activeLink, setActiveLink] = useState(props.ActiveDashboardLink)
+    const [sidebarIsActive, setSidebarIsActive] = useState<boolean>(false)
+
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      if (sidebar.current) {
+          if (window.innerWidth > 900) {
+                sidebar.current.style.left = "0"
+          } else {
+            sidebar.current.style.left = "-100%"
+          }
+
+      }
+      return () => window.removeEventListener("resize", handleResize);
+    }, [width]);
 
     const DashboardActivateLink = (index: number) => {
         setActiveLink(index)
+        if (sidebar.current) {
+            if (window.innerWidth < 900) {
+                  sidebar.current.style.left = "-100%"
+                  handleShowSidebar()
+            }
+        }
     }
 
     useEffect(() => {
         setActiveLink(props.ActiveDashboardLink)
     })
 
+    const handleShowSidebar = () => {
+        setSidebarIsActive(!sidebarIsActive)
+        if (sidebar.current) {
+            if (!sidebarIsActive) {
+                sidebar.current.style.left = "0"
+            } else {
+                sidebar.current.style.left = "-100%"
+            }
+        }
+    }
+
     return (
-        <div className="sidebar">
+        <>
+        <div className="navbar">
+            <div className="sidebar_title">AB Bot Panel</div>
+            <div className="navbar-menu" onClick={() => handleShowSidebar()}>
+                <div className={sidebarIsActive ? "lines active" : "lines"}></div>
+            </div>
+        </div>
+        <div ref={sidebar} className="sidebar">
             <div className="sidebar_title">AB Bot Panel</div>
             <div className="sidebar_category">
                 <div className="sidebar_subcategory">DASHBOARD</div>
@@ -65,6 +109,7 @@ function Sidebar(props:SidebarProps) {
                 </Link>
             </div>
         </div>
+        </>
     )
 }
 

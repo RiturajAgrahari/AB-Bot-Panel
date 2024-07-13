@@ -1,4 +1,4 @@
-import { ReactEventHandler, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api";
 import "../../styles/answers.css"
@@ -17,20 +17,11 @@ interface AnswersProps {
 
 export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
     const questionIdRef = useRef(null)
+    const alertMessage = useRef<HTMLDivElement>(null)
+
 
     const [questionid, setQuestionid] = useState(question_id)
     const [answers, setAnswers] = useState([])
-
-    const HandleSearch = async(e: React.FormEvent<HTMLInputElement>) => {
-        try {
-            const res = await api.get(`/api-data/personalized-bot/answers/?question_id=${e.currentTarget.value}`)
-            if (res.status == 200) {
-                setAnswers(res.data)
-            }
-        } catch (error) {
-            console.error("Error Fetching", error)
-        }
-    }
 
     useEffect(() => {
         const FetchAnswers = async() => {
@@ -41,14 +32,34 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                     console.log(answers)
                 }
             } catch (error) {
+                handleShowAlertMessage();
                 console.error("Error Fetching", error)
             }
         }
         FetchAnswers();
     }, [questionid])
 
+    const handleCloseAlertMessage = () => {
+        if (alertMessage.current) {
+            alertMessage.current.style.display = "none"    
+        }
+    }
+
+    const handleShowAlertMessage = () => {
+        if (alertMessage.current) {
+            alertMessage.current.style.display = "block"
+        }
+    }
+
     return (
-        <div className="Lucky-Bot">
+        <div className="Lucky-Bot Bot">
+            <div ref={alertMessage} className="alert alert-danger alert-white rounded">
+                <button onClick={handleCloseAlertMessage} type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <div className="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                </div>
+                <strong>Error!</strong> Fetching the data!
+            </div> 
         <div className="active-component-header">
             <div className="path">
                 <Link to={"/"} className="path-link">Dashboard</Link>
@@ -57,6 +68,7 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                 <p>&nbsp; &gt; Answers</p>
             </div>
             <h1>Answers</h1>
+        </div>
                 <div className="search-bar">
                     <input ref={questionIdRef} defaultValue={questionid} type="text" className="search" placeholder="Question ID" autoComplete="false" onChange={(e) => {setQuestionid(e.target.value)}}></input>
                     <div className="fl">
@@ -80,6 +92,7 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                     <div className="loading-bar"></div>
                     <div className="loading-bar"></div>
                 </div> */}
+            <div className="table-div">
             <table>
                 <tbody>
                     <tr>
@@ -103,6 +116,7 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                     })}
                 </tbody>
             </table>
+            </div>
 
             {
                 answers.length == 0 
@@ -110,6 +124,5 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                 : <div></div>
             }
         </div>
-    </div>
     )
 }
