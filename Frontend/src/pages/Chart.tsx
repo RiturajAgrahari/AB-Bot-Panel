@@ -132,6 +132,8 @@ function Charts() {
 
     
     const options = {
+        maintainAspectRatio: false,
+        responsive: true,
         scales: {
             x: {stacked: true},
             y: {stacked: true, beginAtZero: true}

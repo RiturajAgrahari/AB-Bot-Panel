@@ -107,6 +107,17 @@
     .search-bar .search {
         width: 90%;
     }
+
+    .Bot .chart {
+        width: 100%;
+        margin-top: 0;
+        margin-left: 0;
+    }
+
+    .Bot .chart canvas{
+        width: 100%;
+        max-height: 500px;
+    }
 }
 
 

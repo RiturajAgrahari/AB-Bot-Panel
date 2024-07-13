@@ -95,6 +95,16 @@ const LuckyBotStatistics = () => {
         ]
         });
 
+    const options = {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+            x: {stacked: true},
+            y: {stacked: true, beginAtZero: true}
+        },
+        plugins: { title: {display: true, text: "Users used the Lucky Bot"}}
+    }
+
         
     return (
         <div className="Bot">
@@ -115,7 +125,7 @@ const LuckyBotStatistics = () => {
             <h1>Lucky Bot</h1>
         </div>
             <div className="graph-block chart">
-                <Line data={chartData} options={{plugins: { title: {display: true, text: "Users used the Lucky Bot"}}}}/>
+                <Line data={chartData} options={options}/>
                 <div className="graph-limit-buttons">
                     <button className={activeButton == 0 ? "active-button": ""} onClick={()=>{handleGraphLimit(0)}}>1W</button>
                     <button className={activeButton == 1 ? "active-button": ""} onClick={()=>{handleGraphLimit(1)}}>1M</button>
