@@ -56,7 +56,8 @@ const LuckyBot = () => {
             </div>
             <div className="card-container">
                 <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"profiles/"}><Card Title="Profiles" Amount={totalTodayLuck} Logo={0}/></Link>
-                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"statistics/"}><Card Title="Statistics" Amount={80} Logo={5}/></Link>
+                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"statistics/"}><Card Title="Statistics" Amount={"Graph"} Logo={5}/></Link>
+                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"bot-reviews/"}><Card Title="Reviews" Amount={5} Logo={4}/></Link>
             </div>
         </div>
     )

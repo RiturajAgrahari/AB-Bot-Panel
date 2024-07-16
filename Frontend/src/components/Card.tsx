@@ -2,7 +2,7 @@ import "../styles/Card.css"
 
 type CardInfo = {
     Title: string;
-    Amount: number;
+    Amount: number | string;
     Logo: number;
 }
 

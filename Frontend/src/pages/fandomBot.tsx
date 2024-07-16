@@ -13,7 +13,7 @@ const FandomBot = () => {
                 <h1>Fandom Bot</h1>
             </div>
             <div className="card-container">
-                <Link style={{textDecoration: "none", color: "black"}} to={"https://arena-breakout.fandom.com/wiki/Arena_Breakout_Wiki"}><Card Title="Fandom Wiki" Amount={27} Logo={1}/></Link>
+                <Link style={{textDecoration: "none", color: "black"}} to={"https://arena-breakout.fandom.com/wiki/Arena_Breakout_Wiki"}><Card Title="Fandom Wiki" Amount={"Fandom Wiki"} Logo={1}/></Link>
             </div>
         </div>
     )

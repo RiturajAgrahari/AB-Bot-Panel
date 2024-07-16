@@ -19,6 +19,7 @@ import PersonalizedBotQuestion from './pages/PersonalizedBot/questions'
 import PersonalizedBotAnswers from './pages/PersonalizedBot/answers'
 import LuckyBotStatistics from './pages/LuckyBot/statistics'
 import AddQuestion from './pages/PersonalizedBot/addQuestion'
+import BotReview from './pages/LuckyBot/botReview'
 
 type ProfileWrapperProps = {
   activeSidebarLink: number;
@@ -58,6 +59,7 @@ function App() {
         <Route path='/lucky-bot' element={<ProtectedRoute><Home activeSidebarLink={1} component={<LuckyBot />}/></ProtectedRoute>} ></Route>
         <Route path='/lucky-bot/statistics' element={<ProtectedRoute><Home activeSidebarLink={1} component={<LuckyBotStatistics />}/></ProtectedRoute>} ></Route>
         <Route path='/lucky-bot/profiles' element={<ProtectedRoute><Home activeSidebarLink={1} component={<TodayLuck />}/></ProtectedRoute>} ></Route>
+        <Route path='/lucky-bot/bot-reviews' element={<ProtectedRoute><Home activeSidebarLink={1} component={<BotReview />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot' element={<ProtectedRoute><Home activeSidebarLink={3} component={<RPGBot />}/></ProtectedRoute>} ></Route>
         <Route path='/rpg-bot/inventory' element={<ProtectedRoute><Home activeSidebarLink={3} component={<Inventory />}/></ProtectedRoute>} ></Route>
         <Route path='/personalized-bot' element={<ProtectedRoute><Home activeSidebarLink={4} component={<PersonalizedBot />}/></ProtectedRoute>} ></Route>

@@ -16,21 +16,23 @@ interface QuestionsProps {
 export default function PersonalizedBotQuestion() {
 
     const [questions, setQuestions] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const alertMessage = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const FetchQuestions = async() => {
-            console.log("sending request")
+            setLoading(true)
             try {
                 const res = await api.get("/api-data/personalized-bot/questions/")
                 if (res.status == 200) {
-                    console.log(res.data)
                     setQuestions(res.data)
                 }
             } catch (error) {
                 handleShowAlertMessage();
                 console.error("Fetching Error", error)
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -69,6 +71,12 @@ export default function PersonalizedBotQuestion() {
         </div>
         <div className="add-question-div">
             <Link to={"add-question"} className="add-question-button">Add Question</Link>
+        </div>
+        <div className="loader" style={{display: loading ? "flex" : "none"}}>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
         </div>
         <div className="card-container" style={{display: "block"}}>
                     {questions.map((item: QuestionsProps) => {

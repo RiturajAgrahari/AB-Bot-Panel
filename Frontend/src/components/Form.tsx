@@ -16,13 +16,14 @@ type FormProps = {
 function Form({route, method}: FormProps) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    // const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [error, setError] = useState<string>()
     const errorMessage = useRef<HTMLDivElement>(null)
     const progressBar = useRef<HTMLDivElement>(null)
+    const loginButton = useRef<HTMLButtonElement>(null)
 
-    const handleError = () => {
+    const handleError = (error: string) => {
+        setError(error)
         errorMessage.current?.classList.add("active")
         progressBar.current?.classList.add("active")
         setTimeout(() => {
@@ -33,7 +34,6 @@ function Form({route, method}: FormProps) {
 
 
     const handleSubmit = async (e: FormEvent) => {
-        // setLoading(true)
         e.preventDefault()
         
         try {
@@ -48,22 +48,20 @@ function Form({route, method}: FormProps) {
         } catch(error) {
             if (error instanceof AxiosError){
                 if (error.response?.status == 401) {
-                    setError("Invalid Login Credentials!")
-                    handleError();
+                    handleError("Invalid Login Credentials!");
                 } else {
-                    alert(error);
+                    handleError(error.message);
                 }
             } else {
-                alert(error);
+                console.error("Error Fetching!",error);
             }
                   
         } finally {
-            // setLoading(false)
+
+           }
         }
-    }
 
     const handleGuestLogin = async () => {
-        // setLoading(true)
         // e.preventDefault()
         
         try {
@@ -78,19 +76,18 @@ function Form({route, method}: FormProps) {
         } catch(error) {
             if (error instanceof AxiosError){
                 if (error.response?.status == 401) {
-                    setError("Guests are not allowed anymore!")
-                    handleError();
+                    handleError("Guests are not allowed anymore!");
                 } else {
-                    alert(error);
+                    handleError(error.message);
                 }
             } else {
                 alert(error);
             }
                   
         } finally {
-            // setLoading(false)
         }
     }
+
 
     return (
         <div className="LoginView">
@@ -109,7 +106,7 @@ function Form({route, method}: FormProps) {
                 <h1>Bot Panel</h1>
                 <input type="text" name="username" id="username" onChange={(event) => setUsername(event.target.value)} placeholder="username" value={username} required/>
                 <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)} placeholder="password" value={password} required/>
-                <button type="submit">Login</button>
+                <button ref={loginButton} type="submit" className="login-button">Login</button>
                 <a href="#" onClick={handleGuestLogin}>are you a guest? Click here</a>
             </form>
         </div>

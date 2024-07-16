@@ -22,9 +22,11 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
 
     const [questionid, setQuestionid] = useState(question_id)
     const [answers, setAnswers] = useState([])
+    const [loading, setLoading] = useState<boolean>()
 
     useEffect(() => {
         const FetchAnswers = async() => {
+            setLoading(true)
             try {
                 const res = await api.get(`/api-data/personalized-bot/answers/?question_id=${questionid}`)
                 if (res.status == 200) {
@@ -34,6 +36,8 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
             } catch (error) {
                 handleShowAlertMessage();
                 console.error("Error Fetching", error)
+            } finally {
+                setLoading(false)
             }
         }
         FetchAnswers();
@@ -86,13 +90,13 @@ export default function PersonalizedBotAnswers({question_id} : QuestionProps) {
                         </div> */}
                     </div>
                 </div>
-                {/* <div className="loader" style={{display: loading ? "flex" : "none"}}>
-                    <div className="loading-bar"></div>
-                    <div className="loading-bar"></div>
-                    <div className="loading-bar"></div>
-                    <div className="loading-bar"></div>
-                </div> */}
-            <div className="table-div">
+            <div className="loader" style={{display: loading ? "flex" : "none"}}>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
+                <div className="loading-bar"></div>
+            </div>
+            <div className="table-div" style={{display : loading ? "none" : "flex"}}>
             <table>
                 <tbody>
                     <tr>

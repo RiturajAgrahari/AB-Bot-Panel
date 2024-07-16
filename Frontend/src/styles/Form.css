@@ -40,7 +40,8 @@
     color: wheat;
 }
 
-.login-form button {
+.login-form .login-button {
+    position: relative;
     background-color: rgba(0, 0, 0, 0);
     color: wheat;
     font-size: 24px;
@@ -48,13 +49,13 @@
     border: 1px solid wheat;
     padding: 10px;
     transition: 0.3s;
-}
-
-.login-form a {
-    text-decoration: none;
-    color: wheat;
-    margin-top: 5px;
-    /* margin-bottom: 70px; */
+    cursor: pointer;
+    height: auto;
+    min-height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
 }
 
 .login-form button:hover {
@@ -62,10 +63,36 @@
     color: black;
 }
 
-.LoginView .toast {
+.login-form .authenticating {
+    cursor: auto;
+}
+
+.login-form .authenticating:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.login-form .authenticating p {
     position: absolute;
-    top: -17%;
+    top: 0;
     left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: wheat;
+    transition: 3s linear width;
+    border: 2px solid red;
+}
+
+.login-form a {
+    text-decoration: none;
+    color: wheat;
+    margin-top: 5px;
+}
+
+.LoginView .toast {
+    position: fixed;
+    top: 10px;
+    left: 75%;
+    width: 250px;
     visibility: hidden;
     opacity: 0;
     border-radius: 12px;
@@ -74,14 +101,13 @@
     padding: 20px 35px 20px 25px;
     box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
 }
 
 .LoginView .toast.active {
     visibility: visible;
     opacity: 1;
-    left: -57%;
+    left: calc(50% - 155px);
 }   
 
 .LoginView .toast-content {

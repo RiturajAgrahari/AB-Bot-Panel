@@ -20,6 +20,7 @@ const Profile = () => {
     const [path, setPath] = useState("/api-data/profiles/")
     const [nextPageLink, setNextPageLink] = useState("")
     const [previousPageLink, setPreviousPageLink] = useState("")
+    const [loading, setLoading] = useState<boolean>(false)
 
     const alertMessage = useRef<HTMLDivElement>(null)
 
@@ -27,6 +28,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchProfiles = async() => {
+            setLoading(true)
             try {
                 const res = await api.get(path)
                 if (res.status == 200) {
@@ -48,7 +50,9 @@ const Profile = () => {
             } catch (error) {
                 handleShowAlertMessage();
                 console.log("Error fetching", error)
-            }      
+            } finally {
+                setLoading(false)
+            }     
         }
         fetchProfiles();
     }, [path, pageNumber])
@@ -118,7 +122,13 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className="table-div">
+                <div className="loader" style={{display: loading ? "flex" : "none"}}>
+                    <div className="loading-bar"></div>
+                    <div className="loading-bar"></div>
+                    <div className="loading-bar"></div>
+                    <div className="loading-bar"></div>
+                </div>
+                <div className="table-div" style={{display : loading ? "none" : "flex"}}>
                     <table>
                         <tbody>
                             <tr>

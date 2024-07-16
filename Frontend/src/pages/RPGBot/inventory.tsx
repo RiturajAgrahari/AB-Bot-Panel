@@ -16,11 +16,10 @@ interface InventoriesProp {
 const Inventory = () => {
 
     // On True it will filter the empty lists from the response...
-    // const [filterEmptyInventories, setFilterEmptyInventories] = useState(false)
+    const [filterEmptyInventories, setFilterEmptyInventories] = useState(false)
 
 
     const [inventories, setInventories] = useState([])
-    const [searchFor, setSearchFor] = useState("")
     const [loading, setLoading] = useState(false)
     const [previousPage, setPreviousPage] = useState(false)
     const [NextPage, setNextPage] = useState(false)
@@ -28,9 +27,9 @@ const Inventory = () => {
     const [path, setPath] = useState("/api-data/rpg-bot/inventories/")
     const [nextPageLink, setNextPageLink] = useState("")
     const [previousPageLink, setPreviousPageLink] = useState("")
+    const [itemsPerPage, setItemPerPage] = useState<string>("10")
 
     const alertMessage = useRef<HTMLDivElement>(null)
-
 
     useEffect(() => {
         const FetchInventory = async () => {
@@ -51,9 +50,8 @@ const Inventory = () => {
                         } else {
                             setNextPage(false)
                         }
-
-                        setInventories(res.data.results)
                         console.log(res.data)
+                        setInventories(res.data.results)
                    } 
             } catch (error) {
                 handleShowAlertMessage();
@@ -64,13 +62,21 @@ const Inventory = () => {
         }
 
         FetchInventory();
-    }, [searchFor, pageNumber, path])
+    }, [pageNumber, path, itemsPerPage, filterEmptyInventories])
+
 
     // Set how much items per page must be rendered!
     const HandleItemsPerPage = (e:React.FormEvent<HTMLSelectElement>) => {
-        setPath(`/api-data/rpg-bot/inventories/?pageitems=${e.currentTarget.value}&`)
+        setItemPerPage(e.currentTarget.value)
+        setPath(`/api-data/rpg-bot/inventories/?page_size=${e.currentTarget.value}&filterword=${filterEmptyInventories}`)
         // set current page back to 1
         setPageNumber(1)
+    }
+
+    const HandleFilter = () => {
+        setPageNumber(1)
+        setFilterEmptyInventories(!filterEmptyInventories)
+        setPath(`/api-data/rpg-bot/inventories/?page_size=${itemsPerPage}&filterword=${!filterEmptyInventories}`)
     }
 
     const HandleNextPage = () => {
@@ -82,22 +88,6 @@ const Inventory = () => {
         setPath(previousPageLink)
         setPageNumber(pageNumber - 1)
     }
-
-    const HandleSearch = (e: React.FormEvent<HTMLInputElement>) => {
-        setSearchFor(e.currentTarget.value)
-        // if (path.endsWith("/")) {
-        //     setPath(`${path}?searchfor=${e.currentTarget.value}`)
-        // } else {
-        //     setPath(`${path}&searchfor=${e.currentTarget.value}`)
-        // }
-        // console.log(path)
-    }
-
-
-    // const HandleFilter = () => {
-    //     setFilterEmptyInventories(!filterEmptyInventories)
-    //     setPath(`${path}?filter=${filterEmptyInventories}`)
-    // }
 
     const ArrangeEventLetters = (inventory_words: string) => {
         const words_array = inventory_words ? inventory_words.split(",") : [];
@@ -162,8 +152,7 @@ const Inventory = () => {
                 <h1>RPG Bot</h1>
             </div>
                 <div className="search-bar">
-                    <input type="text" className="search" placeholder="Search" autoComplete="false" onChange={(e) => {HandleSearch(e)}} disabled></input>
-                    {/* <input type="checkbox" onChange={HandleFilter}></input> */}
+                    <input type="checkbox" onChange={HandleFilter}></input>
                     <p>Filter user with no words</p>
                     <div className="fl">
                         <select name="pages" className="pages" defaultValue={10} onChange={HandleItemsPerPage}>
@@ -171,7 +160,7 @@ const Inventory = () => {
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
-                            <option value="all">all</option>
+                            <option value="10000">all</option>
                         </select>
                         <div className="pagination">
                             <button style={{visibility: previousPage ? "visible" : "hidden"}} onClick={HandlePreviousPage}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></button>
@@ -186,7 +175,7 @@ const Inventory = () => {
                     <div className="loading-bar"></div>
                     <div className="loading-bar"></div>
                 </div>
-                <div className="table-div">
+                <div className="table-div" style={{display: loading ? "none": "flex"}}>
                 <table>
                     <tbody>
                         <tr>

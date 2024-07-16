@@ -7,7 +7,7 @@ const Dashboard = () => {
         <div className="Dashboard">
             <div className="active-component-header">
                 <div className="path">
-                    <p>dashboard</p>
+                    <p>Dashboard</p>
                 </div>
                 <h1>dashboard</h1>
             </div>

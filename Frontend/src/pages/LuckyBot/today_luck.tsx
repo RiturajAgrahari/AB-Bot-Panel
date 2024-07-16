@@ -31,7 +31,6 @@ const TodayLuck = () => {
         }
         setSearchFor("");
         searchBarRef.current?.focus();  
-
     }
 
     useEffect(() => {
@@ -101,7 +100,7 @@ const TodayLuck = () => {
                 <div className="loading-bar"></div>
                 <div className="loading-bar"></div>
             </div>
-            <div className="table-div">
+            <div className="table-div" style={{display: loading ? "none": "flex"}}>
             <table>
                 <tbody>
                     <tr>
