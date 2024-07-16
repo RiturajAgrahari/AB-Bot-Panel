@@ -28,16 +28,6 @@ class TodayLuck(models.Model):
         managed = False
 
 
-class Events(models.Model):
-    id = models.BigIntegerField(verbose_name="id", primary_key=True)
-    uid = models.BigIntegerField(verbose_name="uid", null=True)
-    letter_event = models.CharField(verbose_name="letter event", max_length=25, null=True)
-
-    class Meta:
-        db_table = "events"
-        managed = False
-
-
 class Inventory(models.Model):
     id = models.BigIntegerField(verbose_name="id", primary_key=True)
     uid = models.BigIntegerField(verbose_name="uid", null=True)
@@ -95,4 +85,16 @@ class BotInfo(models.Model):
 
     class Meta:
         db_table = "bot_info"
+        managed = False
+
+
+class BotReview(models.Model):
+    id = models.BigIntegerField(verbose_name="id", primary_key=True)
+    uid = models.BigIntegerField(verbose_name="uid", null=True)
+    review = models.CharField(verbose_name="review", null=True, max_length=300)
+    star_rating = models.IntegerField(verbose_name="star_rating", null=True)
+    review_on = models.DateField(verbose_name="review_on", null=True)
+
+    class Meta:
+        db_table = "bot_review"
         managed = False

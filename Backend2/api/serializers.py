@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import (Profile, TodayLuck, Events, Personalized_test_question, Personalized_test_answer, Record,
-                     BotInfo, Inventory)
+from .models import (Profile, TodayLuck, Personalized_test_question, Personalized_test_answer, Record,
+                     BotInfo, Inventory, BotReview)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -13,17 +13,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             "event_used",
             "last_used_on"
         ]
-
-
-class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Events
-        fields = [
-            "id",
-            "uid",
-            "letter_event"
-        ]
-
 
 class TodayLuckSerializer(serializers.ModelSerializer):
     class Meta:
@@ -96,3 +85,9 @@ class InventorySerializer(serializers.ModelSerializer):
             "koens",
             "status",
         ]
+
+
+class BotReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BotReview
+        fields = "__all__"

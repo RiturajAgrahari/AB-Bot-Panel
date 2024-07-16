@@ -1,25 +1,29 @@
+import time
+
 import cloudinary.uploader
 from django.db.models import Q
-from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
-from rest_framework import generics, mixins, permissions, authentication
+from rest_framework import generics, mixins
 
 from rest_framework.pagination import PageNumberPagination
 
 from .forms import PersonalizedTestQuestion
-from .models import Profile, TodayLuck, Events, Inventory, Personalized_test_question, Personalized_test_answer, Record, BotInfo
-from .serializers import (ProfileSerializer, EventSerializer, TodayLuckSerializer, PersonalizedQuestionsSerializers,
+from .models import (Profile, TodayLuck, Inventory, Personalized_test_question, Personalized_test_answer, Record,
+                     BotInfo, BotReview)
+from .serializers import (ProfileSerializer, TodayLuckSerializer, PersonalizedQuestionsSerializers,
                           PersonalizedAnswersSerializer, TodayLuckRecordSerializer, BotInfoSerializer,
-                          InventorySerializer)
-
+                          InventorySerializer, BotReviewSerializer)
+from .filters import InventorySearchFilter
 # Create your views here.
 
 
-def testfun(request):
-    return HttpResponse(request, "test view is called!")
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
 
 
 @api_view(["GET"])
@@ -34,128 +38,72 @@ def user_panel(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 @authentication_classes([JWTAuthentication])
 def total_today_luck(request, *args, **kwargs):
-    instances = TodayLuck.objects.all()
-    total_today_luck = instances.count() if instances else 0
+    if str(request.user) == "Arena":
+        total_today_lucks = TodayLuck.objects.all().count()
+    else:
+        total_today_lucks = 100
 
     data = {
-        'total_today_luck': total_today_luck,
+        'total_today_luck': total_today_lucks,
     }
 
-    if str(request.user) == "Arena":
-        return Response(data)
-    else:
-        return Response({'total_today_luck': "100"})
+    return Response(data)
+
 
 
 @api_view(["GET"])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def TotalEventsView(request, *args, **kwargs):
+def total_inventories(request, *args, **kwargs):
     """
     DRF api view
     """
-    instances = Events.objects.all()
-    total_inventories = instances.count() if instances else 0
+    if str(request.user) == "Arena":
+        total_inventory = Inventory.objects.all().count()
+    else:
+        total_inventory = Inventory.objects.all().order_by('id').filter(id__lt=100).count()
 
     data = {
-        'total_inventories': total_inventories,
+        'total_inventories': total_inventory,
     }
 
-    if str(request.user) == "Arena":
-        return Response(data)
-    else:
-        return Response({'total_inventories': "100"})
+    return Response(data)
 
 
-class EventsMixinView(
+class InventoryMixinView(
     mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
     generics.GenericAPIView
 ):
     queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
-    pagination_class = PageNumberPagination
-    lookup_field = 'id'
-    PageNumberPagination.page_size = 20
-    # filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['storage']
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        if str(self.request.user) == "Arena":
+            return super().get_queryset()
+        else:
+            return super().get_queryset().order_by('id').filter(id__lt=100)
+            # return super().get_queryset()[:100]
 
     def get(self, request, *args, **kwargs):
-
-        if str(request.user) == "Arena":
-
-            # Setting up how many items must be sent in each page!
-            page_items = request.query_params.get("pageitems", 10)
-            if page_items == "all":
-                PageNumberPagination.page_size = 100000
-            else:
-                PageNumberPagination.page_size = page_items
-
-            inventory_id = kwargs.get("id")
-            if inventory_id is not None:
-                return self.retrieve(request, *args, **kwargs)
-
-            search_query = request.query_params.get("search", None)
-            search_category = request.query_params.get("category", None)
-
-            if search_category and search_query:
-                    queryset = self.queryset.filter(**{f"{search_category}__icontains": search_query})
-                    queryset_data = self.serializer_class(queryset, many=True).data
-
-                    # if request.user == "Arena":
-                    return Response(queryset_data)
-                    # else:
-                    #     if queryset_data > 101:
-                    #         return Response(queryset_data[len(queryset), len(queryset) - 101: -1])
-                    #     return Response(queryset_data)
-
-            # if request.user == "Arena":
+        filter_word = request.query_params.get("filterword", None)
+        if filter_word == "true":
+            self.queryset = self.get_queryset().exclude(storage='None')
             return self.list(request, *args, **kwargs)
-            # else:
-            #     queryset = Inventory.objects.all()
-            #     queryset_data = self.serializer_class(queryset, many=True).data
-            #     res_data = {"results": queryset_data[len(queryset_data): len(queryset_data) - 101: -1]}
-            #     if len(queryset_data) > 101:
-            #         return Response(res_data)
-            #     return Response({"results": queryset_data})
 
-        else:
-            # Setting up how many items must be sent in each page!
-            self.queryset = Inventory.objects.all().order_by('id').values()[0:100]
-            page_items = request.query_params.get("pageitems", 10)
-            if page_items == "all":
-                PageNumberPagination.page_size = 100000
-            else:
-                PageNumberPagination.page_size = page_items
-
-            inventory_id = kwargs.get("id")
-            if inventory_id is not None:
-                return self.retrieve(request, *args, **kwargs)
-
-            search_query = request.query_params.get("search", None)
-            search_category = request.query_params.get("category", None)
-
-            if search_category and search_query:
-                queryset = self.queryset.filter(**{f"{search_category}__icontains": search_query})
-                queryset_data = self.serializer_class(queryset, many=True).data
-
-                return Response(queryset_data)
-
-            return self.list(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
 
 class TodayLuckMixinView(
     mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
     generics.GenericAPIView
 ):
     queryset = TodayLuck.objects.all()
     serializer_class = TodayLuckSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
-    lookup_field = "uid"
 
     def get(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
@@ -233,48 +181,57 @@ class ProfilesMixinView(
 @api_view(["GET"])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def TotalProfilesView(request, *args, **kwargs):
+def total_profile_view(request, *args, **kwargs):
     """
     DRF api view
     """
     if str(request.user) == "Arena":
-        instances = Profile.objects.all()
-        total_profiles = instances.count() if instances else 0
-        data = {
-            'total_profiles': total_profiles,
+        instances = Profile.objects.all().count()
+    else:
+        instances = Profile.objects.all().order_by("uid").filter(uid__lt=100).count()
+
+    data = {
+            'total_profiles': instances,
         }
 
-        return Response(data)
-    else:
-        return Response({'total_profiles': 100})
+    return Response(data)
 
 
 @api_view(["GET"])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def TotalPersonalizedView(request, *args, **kwargs):
+def total_personalized_data(request, *args, **kwargs):
     if str(request.user) == "Arena":
-        question_instances = Personalized_test_question.objects.all()
-        answer_instances = Personalized_test_answer.objects.all()
+        question_instances = Personalized_test_question.objects.all().count()
+        answers_instances = Personalized_test_answer.objects.all().count()
 
-        data = {
-            "total_questions": question_instances.count() if question_instances else 0,
-            "total_answers": answer_instances.count() if answer_instances else 0
-        }
-
-        return Response(data)
     else:
-        return Response({"total_questions": 10, "total_answers": 10})
+        question_instances = Personalized_test_question.objects.all().order_by("id").filter(id__lt=10).count()
+        answers_instances = Personalized_test_answer.objects.all().order_by("id").filter(id__lt=10).count()
+
+    data = {
+        "total_questions": question_instances,
+        "total_answers": answers_instances
+    }
+
+    return Response(data)
 
 
 class PersonalizedQuestions(
     mixins.ListModelMixin,
     generics.GenericAPIView
 ):
-    queryset = Personalized_test_question.objects.all()[::-1]
+    queryset = Personalized_test_question.objects.all().order_by("-id")
     serializer_class = PersonalizedQuestionsSerializers
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        if str(request.user) == "Arena":
+            return self.list(request, *args, **kwargs)
+        else:
+            self.queryset = self.get_queryset().order_by("id")[:5]
+            return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
@@ -301,22 +258,6 @@ class PersonalizedQuestions(
             return Response({"data": "i got your response bro"})
         else:
             return Response({"error": "Guests can't post questions"}, status=401)
-
-
-@api_view(["GET"])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def PersonalizedQuestionsTwo(request, *args, **kwargs):
-    if str(request.user) == "Arena":
-        queryset = Personalized_test_question.objects.all()[::-1]
-        serialized_data = PersonalizedQuestionsSerializers(queryset, many=True)
-        if serialized_data:
-            return Response(serialized_data.data)
-    else:
-        queryset = Personalized_test_question.objects.all()[0:5]
-        serialized_data = PersonalizedQuestionsSerializers(queryset, many=True)
-        if serialized_data:
-            return Response(serialized_data.data)
 
 
 class PersonalizedAnswers(
@@ -357,7 +298,7 @@ class PersonalizedAnswers(
 @api_view(["GET"])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def LuckyBotRecord(request, *args, **kwargs):
+def lucky_bot_record(request, *args, **kwargs):
     if str(request.user) == "Arena":
         recordLimit = request.query_params.get("recordlimit")
         queryset = Record.objects.all().exclude(date=None)
@@ -385,7 +326,7 @@ def LuckyBotRecord(request, *args, **kwargs):
 @api_view(["GET"])
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
-def BotInformation(request, *args, **kwargs):
+def bot_information(request, *args, **kwargs):
     if str(request.user) == "Arena":
         recordLimit = request.query_params.get("recordlimit")
         queryset = BotInfo.objects.all()
@@ -435,3 +376,19 @@ def CheckProfile(request, *args, **kwargs):
         return Response(profile_information)
     else:
         return Response({"error": "Guests are not allowed to check the profile!"}, status=401)
+
+
+class BotReviews(
+    mixins.ListModelMixin,
+    generics.GenericAPIView
+):
+    queryset = BotReview.objects.all()
+    serializer_class = BotReviewSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        if str(request.user) == "Arena":
+            return self.list(self, request, *args, **kwargs)
+        else:
+            return Response({"error": "Guests are not allowed to check the reviews!"}, status=401)
