@@ -7,6 +7,7 @@ import api from "../../api";
 const LuckyBot = () => {
 
     const [totalTodayLuck, setTotalTodayLuck] = useState(0)
+    const [totalReviews, setTotalReviews] = useState(0)
 
     const alertMessage = useRef<HTMLDivElement>(null)
 
@@ -17,6 +18,7 @@ const LuckyBot = () => {
                 const res = await api.get("api-data/lucky-bot/total_today_luck/")
                 if (res.status == 200 ) {
                     setTotalTodayLuck(res.data.total_today_luck)
+                    setTotalReviews(res.data.total_reviews)
                 }
             } catch (error) {
                 handleShowAlertMessage();
@@ -57,7 +59,7 @@ const LuckyBot = () => {
             <div className="card-container">
                 <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"profiles/"}><Card Title="Profiles" Amount={totalTodayLuck} Logo={0}/></Link>
                 <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"statistics/"}><Card Title="Statistics" Amount={"Graph"} Logo={5}/></Link>
-                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"bot-reviews/"}><Card Title="Reviews" Amount={5} Logo={4}/></Link>
+                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"bot-reviews/"}><Card Title="Reviews" Amount={totalReviews} Logo={4}/></Link>
             </div>
         </div>
     )

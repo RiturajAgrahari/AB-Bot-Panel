@@ -1,9 +1,17 @@
+@font-face {
+    font-family: "refrigerator_deluxe_bold";
+    src: url('../../src/static/refrigerator_deluxe_bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .Add-Questions-component .add-question-form {
-    border: 1px solid black;
-    border-radius: 20px;
+    box-shadow: 0 0 1px 0 black;
+    border-radius: 2px;
     padding: 40px 60px;
     font-size: 18px;
     margin-top: 20px;
+    background-color: white;
 }
 
 .Add-Questions-component .add-question-form {
@@ -11,6 +19,11 @@
     align-items: start;
     justify-content: start;
     flex-direction: column;
+}
+
+.Add-Questions-component .add-question-form input::placeholder, textarea::placeholder, select {
+    font-family: 'refrigerator_deluxe_bold', serif; 
+    color: gray;    
 }
 
 .Add-Questions-component .add-question-form input, textarea, select, option {

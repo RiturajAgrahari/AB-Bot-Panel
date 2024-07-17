@@ -1,5 +1,6 @@
 .question-component {
-    border: 1px solid black;
+    box-shadow: 0 0 1px 0 black;
+    background-color: white;
     margin: 10px 0;
     padding: 25px;
     display: flex;
