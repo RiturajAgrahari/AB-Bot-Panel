@@ -18,7 +18,6 @@ import cloudinary
 
 load_dotenv()
 
-
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
@@ -30,19 +29,18 @@ cloudinary.config(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u$h1vnybddyn%3^jw6h7wx7$rkt(sy7w$@os)#fco_q6h#t=^e'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = ["botpanelapi.rituraj-agrahari.com", '64.176.68.68']
+# ALLOWED_HOSTS = ["botpanelapi.rituraj-agrahari.com"]
 
 
 # Application definition
@@ -131,39 +129,46 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
+
+"""For Development: """
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+"""For Deployment:"""
 # STATIC_ROOT = "/srv/http/botpanel/static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Some Deployment Security things for http links
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
+# Cors header Settings:
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',  # Add the origin of your React app
+    'http://localhost:5173',
     'https://botpanel.rituraj-agrahari.com'
 ]
-
+CORS_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'https://botpanel.rituraj-agrahari.com'
+]
 # Optional: Allow credentials (cookies, authorization headers, etc.) to be sent
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_TRUSTED_ORIGINS = [
-    'http://localhost:5173',  # Add the origin of your React app
-    'https://botpanel.rituraj-agrahari.com'
-]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+# Rest Framework Default Settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -178,6 +183,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+
+# Authentication Method
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),

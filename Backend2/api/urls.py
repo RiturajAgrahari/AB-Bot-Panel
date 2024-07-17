@@ -16,7 +16,4 @@ urlpatterns = [
     path("profiles/", views.ProfilesMixinView.as_view(), name="profiles"),
     path("profiles/profile/", views.CheckProfile, name="profile"),
     path("personalized-bot/add-question/", views.PersonalizedQuestions.as_view(), name="add_question")
-    # path("profiles/<int:uid>", views.ProfilesMixinView.as_view(), name="one-profiles"),
-    # path("get_all_profiles/", views.get_all_profile, name="one-profiles"),
-    # path("get_all_today_luck/", views.get_all_today_luck, name="get-all-today-luck"),
 ]
