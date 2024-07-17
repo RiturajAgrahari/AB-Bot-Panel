@@ -4,7 +4,7 @@ from api import views
 urlpatterns = [
     path("bots/usage-information/", views.bot_information, name="all_bot_information"),
     path("lucky-bot/total_today_luck/", views.total_today_luck, name="total_today_lucks"),
-    path("lucky-bot/today_luck/", views.today_luck, name="today_luck"),
+    path("lucky-bot/today_luck/", views.TodayLuckMixinView.as_view(), name="today_luck"),
     path("lucky-bot/records/", views.lucky_bot_record, name="lucky_bot_record"),
     path("lucky-bot/bot-reviews/", views.BotReviews.as_view(), name="bot review"),
     path("rpg-bot/total_inventory/", views.total_inventories, name="total_inventories"),

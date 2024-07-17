@@ -58,7 +58,7 @@ const Profile = () => {
     }, [path, pageNumber])
 
     const HandleItemsPerPage = (e:React.FormEvent<HTMLSelectElement>) => {
-        setPath(`/api-data/profiles/?pageitems=${e.currentTarget.value}&`)
+        setPath(`/api-data/profiles/?page_size=${e.currentTarget.value}&`)
         // set current page back to 1
         setPageNumber(1)
     }
@@ -113,7 +113,7 @@ const Profile = () => {
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
-                            <option value="all">all</option>
+                            <option value="10000">all</option>
                         </select>
                         <div className="pagination">
                             <button style={{visibility: previousPage ? "visible" : "hidden"}} onClick={HandlePreviousPage}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></button>

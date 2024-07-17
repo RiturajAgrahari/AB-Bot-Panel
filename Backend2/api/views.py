@@ -40,15 +40,17 @@ def user_panel(request, *args, **kwargs):
 def total_today_luck(request, *args, **kwargs):
     if str(request.user) == "Arena":
         total_today_lucks = TodayLuck.objects.all().count()
+        total_reviews = BotReview.objects.all().count()
     else:
-        total_today_lucks = 100
+        total_today_lucks = 10
+        total_reviews = BotReview.objects.all().order_by("id").filter(id__lt=10).count()
 
     data = {
         'total_today_luck': total_today_lucks,
+        'total_reviews': total_reviews,
     }
 
     return Response(data)
-
 
 
 @api_view(["GET"])
@@ -117,64 +119,37 @@ class TodayLuckMixinView(
 
             return self.list(request, *args, **kwargs)
 
+        else:
+            # limit unauthenticated users to the first 100 objects
+            search_query = request.query_params.get("search", None)
+            search_category = request.query_params.get("category", None)
 
-# not good for guests
-@api_view(["GET"])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def today_luck(request, *args, **kwargs):
-    queryset = TodayLuck.objects
-    search_query = request.query_params.get("search", None)
-    search_category = request.query_params.get("category", None)
+            if search_category and search_query:
+                guest_qs = list(TodayLuck.objects.values_list("pk", flat=True)[:10])
 
-    if search_category and search_query:
-        queryset = queryset.filter(**{f"{search_category}__icontains": search_query})
-        serialized_data = TodayLuckSerializer(queryset, many=True)
-        if serialized_data:
-            return Response(serialized_data.data)
+                self.queryset = self.get_queryset().filter(pk__in=guest_qs).filter(**{f"{search_category}__icontains": search_query})
+                return self.list(request, *args, **kwargs)
 
-    serialized_data = TodayLuckSerializer(queryset.all(), many=True)
-    if serialized_data:
-        return Response(serialized_data.data)
+            self.queryset = self.get_queryset()[0:10]
+            return self.list(request, *args, **kwargs)
 
 
 class ProfilesMixinView(
     mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
     generics.GenericAPIView
 ):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
-    lookup_field = 'uid'
-    pagination_class = PageNumberPagination
-    PageNumberPagination.page_size = 20
+    pagination_class = StandardResultsSetPagination
 
     def get(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
-            uid = kwargs.get("uid")
-
-            page_items = request.query_params.get("pageitems", 10)
-            if page_items == "all":
-                PageNumberPagination.page_size = 100000
-            else:
-                PageNumberPagination.page_size = page_items
-            if uid is not None:
-                return self.retrieve(request, *args, **kwargs)
             return self.list(request, *args, **kwargs)
 
         else:
             self.queryset = Profile.objects.all().order_by("uid").values()[0:100]
-            uid = kwargs.get("uid")
-
-            page_items = request.query_params.get("pageitems", 10)
-            if page_items == "all":
-                PageNumberPagination.page_size = 100000
-            else:
-                PageNumberPagination.page_size = page_items
-            if uid is not None:
-                return self.retrieve(request, *args, **kwargs)
             return self.list(request, *args, **kwargs)
 
 
@@ -238,7 +213,7 @@ class PersonalizedQuestions(
             print(request.data)
             title = request.data.get("title")
             description = request.data.get("description")
-            type = request.data.get("questiontype")
+            question_type = request.data.get("questiontype")
             date_time = request.data.get("time")
             for filename, file in request.FILES.items():
                 image = request.FILES[filename].file
@@ -249,7 +224,7 @@ class PersonalizedQuestions(
             image_url = cloudinary_response['url']
 
             form = PersonalizedTestQuestion(
-                {"title": title, "description": description, "image": image_url, "type": type, "time": date_time})
+                {"title": title, "description": description, "image": image_url, "type": question_type, "time": date_time})
             if form.is_valid():
                 print(form.is_valid())
                 form.save()
@@ -273,9 +248,8 @@ class PersonalizedAnswers(
         if str(request.user) == "Arena":
             question_id = request.query_params.get("question_id")
             if question_id:
-                queryset = self.queryset.filter(question_id__iexact=int(question_id))
-                serialized_data = PersonalizedAnswersSerializer(queryset, many=True).data
-                return Response(serialized_data)
+                self.queryset = self.get_queryset().filter(question_id__iexact=int(question_id))
+                return self.list(request, *args, **kwargs)
 
             return self.list(request, *args, **kwargs)
         else:
@@ -312,7 +286,7 @@ def lucky_bot_record(request, *args, **kwargs):
         return Response(data=serialized_data)
     else:
         recordLimit = request.query_params.get("recordlimit")
-        queryset = Record.objects.all().exclude(date=None)[0:30]
+        queryset = Record.objects.all().exclude(date=None)[0:40]
         serialized_data = TodayLuckRecordSerializer(queryset, many=True).data
         if recordLimit:
             if recordLimit == "month":
@@ -340,7 +314,7 @@ def bot_information(request, *args, **kwargs):
         return Response(data=serialized_data)
     else:
         recordLimit = request.query_params.get("recordlimit")
-        queryset = BotInfo.objects.all()[0:30]
+        queryset = BotInfo.objects.all()[0:40   ]
         serialized_data = BotInfoSerializer(queryset, many=True).data
         if recordLimit:
             if recordLimit == "month":

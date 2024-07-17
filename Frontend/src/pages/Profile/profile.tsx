@@ -114,6 +114,7 @@ const UserProfile = ({profile_uid}: ProfileProps) => {
                 <strong>Error!</strong> {errorAccessMessage}
             </div> 
             <h1>UID {profile_uid} :</h1>
+            { profileInfo?.name ?
             <div className="profile-info">
                 <div className="discord-info">
                     <h1>{profileInfo?.name}</h1>
@@ -160,7 +161,9 @@ const UserProfile = ({profile_uid}: ProfileProps) => {
                 </div>
 
 
-            </div>
+            </div> :
+            <div> </div>
+            }
         </div>
     )
 };

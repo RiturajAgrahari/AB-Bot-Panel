@@ -30,7 +30,7 @@ function BotReview() {
             } catch (error) {
                 if (error instanceof AxiosError){
                     if (error.response?.status == 401) {
-                        handleShowAlertMessage("Guests are not allowed to check the profile!");
+                        handleShowAlertMessage("Guests are not allowed to check the reviews!");
                     } else {
                         handleShowAlertMessage("Fetching the data!");
                         console.error("Error Fetching", error)
