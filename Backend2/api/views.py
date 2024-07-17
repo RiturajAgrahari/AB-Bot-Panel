@@ -1,7 +1,5 @@
-import time
-
 import cloudinary.uploader
-from django.db.models import Q
+# from django.db.models import Q
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -16,7 +14,15 @@ from .models import (Profile, TodayLuck, Inventory, Personalized_test_question, 
 from .serializers import (ProfileSerializer, TodayLuckSerializer, PersonalizedQuestionsSerializers,
                           PersonalizedAnswersSerializer, TodayLuckRecordSerializer, BotInfoSerializer,
                           InventorySerializer, BotReviewSerializer)
-from .filters import InventorySearchFilter
+# from .filters import InventorySearchFilter
+
+import logging
+
+logger = logging.getLogger("django")
+info_logger = logging.getLogger("log_info")
+error_logger = logging.getLogger("log_error")
+
+
 # Create your views here.
 
 
@@ -210,25 +216,33 @@ class PersonalizedQuestions(
 
     def post(self, request, *args, **kwargs):
         if str(request.user) == "Arena":
-            print(request.data)
+            info_logger.info(f"{self.request.user} is trying adding a question!")
             title = request.data.get("title")
             description = request.data.get("description")
             question_type = request.data.get("questiontype")
             date_time = request.data.get("time")
+
             for filename, file in request.FILES.items():
                 image = request.FILES[filename].file
 
             cloudinary_response = cloudinary.uploader.upload(image, folder="BotPanel", unique_filename=True,
                                                              overwrite=False)
-            print("image uploaded successfully!")
             image_url = cloudinary_response['url']
+
+            info_logger.info(f"question information! \n"
+                             f"title - {title} \n"
+                             f"description - {description} \n"
+                             f"question type - {question_type} \n"
+                             f"date time - {date_time} \n"
+                             f"image url - {image_url} \n")
 
             form = PersonalizedTestQuestion(
                 {"title": title, "description": description, "image": image_url, "type": question_type, "time": date_time})
             if form.is_valid():
-                print(form.is_valid())
                 form.save()
-            print(form.errors)
+                info_logger.info(f"{request.user} successfully added a question!")
+
+            error_logger.error(form.errors)
 
             return Response({"data": "i got your response bro"})
         else:
