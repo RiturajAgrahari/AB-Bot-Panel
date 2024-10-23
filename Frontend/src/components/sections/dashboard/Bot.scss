@@ -1,6 +1,8 @@
+$dashboard_text: #181818;
+
 .Bot-Card {
-    margin: 40px 0;
-    box-shadow: 0px 0px 3px #181818;
+    margin: 20px 0;
+    box-shadow: 0px 0px 3px $dashboard_text;
     border-radius: 10px;
     background-color: white;
     padding: 10px 20px;
@@ -10,8 +12,9 @@
     align-items: center;
     transition: 0.2s;
     position: relative;
-    box-sizing: border-box;
     text-decoration: none;
+    color: $dashboard_text;
+    gap: 10px;
 }
 
 .Bot-Card .bot-pfp {
@@ -20,7 +23,6 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 10px;
     background-color: rgb(49, 51, 56);
     padding: 5px;
 }
@@ -43,7 +45,6 @@
     height: 15px;
     background-color: rgb(35, 165, 95);
     border: 3px solid rgb(57, 60, 65);
-    display: flex;
 }
 
 .Bot-Card .bot-info .bot-name {
@@ -59,7 +60,7 @@
 }
 
 .Bot-Card:hover {
-    box-shadow: 0 0 6px 1px #181818;    
+    box-shadow: 0 0 6px 1px $dashboard_text;    
 }
 
 @media only screen and (max-width : 1300px) {

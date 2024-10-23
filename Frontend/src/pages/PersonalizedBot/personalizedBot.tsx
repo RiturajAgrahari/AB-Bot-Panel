@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Card from "../../components/Card";
+import Card from "../../components/card/Card";
 import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 import "../../styles/home.css"

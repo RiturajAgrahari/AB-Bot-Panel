@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../../styles/home.css"
-import Card from "../../components/Card";
+import Card from "../../components/card/Card";
 import { useEffect, useRef, useState } from "react";
 import api from "../../api";
 
@@ -57,7 +57,7 @@ const LuckyBot = () => {
                 <h1>Lucky Bot</h1>
             </div>
             <div className="card-container">
-                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"profiles/"}><Card Title="Profiles" Amount={totalTodayLuck} Logo={0}/></Link>
+                <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"profiles/"}><Card Title="Today's Drops" Amount={totalTodayLuck} Logo={0}/></Link>
                 <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"statistics/"}><Card Title="Statistics" Amount={"Graph"} Logo={5}/></Link>
                 <Link className="card-linking" style={{textDecoration: "none", color: "black"}} to={"bot-reviews/"}><Card Title="Reviews" Amount={totalReviews} Logo={4}/></Link>
             </div>

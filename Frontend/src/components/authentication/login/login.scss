@@ -1,8 +1,8 @@
+$border : 2px solid red;
+
 .login-page {
     position: relative;
-    background-color: black;
     height: 100vh;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -29,10 +29,8 @@
     display: flex;
     align-items: center;
     justify-content: center; 
-    gap: 30px;
     padding: 50px;
     border-radius: 20px;
-    box-sizing: border-box;
     background-color: rgba(60, 55, 55, 0.3);
     backdrop-filter: blur(5px);
     transition: 0.5s;
@@ -58,7 +56,6 @@
     width: 100%;
     height: 100%;
     object-fit: fill ;
-    box-sizing: border-box;
 }
 
 .login-page .panel-servers .panel-image:hover {

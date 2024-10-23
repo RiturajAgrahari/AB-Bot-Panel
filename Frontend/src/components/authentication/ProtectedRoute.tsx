@@ -1,7 +1,7 @@
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"
-import api from "../api"
-import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
+import api from "../../api"
+import { REFRESH_TOKEN, ACCESS_TOKEN } from "../../constants";
 import { useState, useEffect, ReactNode } from "react";
 
 type ProtectedRouteProps = {
@@ -10,6 +10,8 @@ type ProtectedRouteProps = {
 
 function ProtectedRoute({children}: ProtectedRouteProps) {
     const [isAuthorized, setIsAuthorized] = useState(false)
+    const [loading, setLoading] = useState<boolean>(true)
+
 
     useEffect(() => {
         auth().catch(() => setIsAuthorized(false))
@@ -24,8 +26,10 @@ function ProtectedRoute({children}: ProtectedRouteProps) {
             if (res.status == 200) {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access)
                 setIsAuthorized(true)
+                setLoading(false)
             } else {
                 setIsAuthorized(false)
+                setLoading(false)
             }
         } catch (error) {
             console.log(error)
@@ -37,7 +41,8 @@ function ProtectedRoute({children}: ProtectedRouteProps) {
         const token = localStorage.getItem(ACCESS_TOKEN)
         if (!token) {
             setIsAuthorized(false)
-            return
+            setLoading(false)
+            return 
         }
         const decoded: any = jwtDecode(token)
         const tokenExpiration = decoded.exp
@@ -47,17 +52,21 @@ function ProtectedRoute({children}: ProtectedRouteProps) {
             await refreshToken()
         } else {
             setIsAuthorized(true)
+            setLoading(false)
         }
     }
 
-    if (isAuthorized === false){
+    if (loading === true){
         return (
-            <div style={{display:"flex", justifyContent: "center", alignItems:"center", flexDirection:"column", width:"100%", height: "80vh"}}>
-                <h1>You Session is Expired</h1>
-                <p>Please Login again!</p>
-                <Link to={"/login"} style={{border:"1px solid gray", textAlign: "center", textDecoration: "none", backgroundColor: "lightgray",color: "black", padding:"15px 40px", fontSize:"24px", width: "40%", margin: "20px"}}>Login</Link>
+            <div className="loader" style={{display: loading ? "flex" : "none"}}>
+                <div style={{backgroundColor: "white"}} className="loading-bar"></div>
+                <div style={{backgroundColor: "white"}} className="loading-bar"></div>
+                <div style={{backgroundColor: "white"}} className="loading-bar"></div>
+                <div style={{backgroundColor: "white"}} className="loading-bar"></div>
             </div>
-        )
+        ) 
+    } else if (loading === false ) {
+        return isAuthorized ? children : <Navigate to="/login"/>
     }
     
     return isAuthorized ? children : <Navigate to="/login"/>

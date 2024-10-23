@@ -1,0 +1,176 @@
+.LoginView {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginView .login-form {
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-form h1 {
+  margin: 50px 0;
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #e0e0e0, #adadac, #a4a4a3);
+}
+
+.login-form input {
+  background-color: transparent;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #a4a4a3;
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #e0e0e0, #adadac, #a4a4a3);
+  width: 70%;
+  outline: none;
+  font-family: "refrigerator_deluxe_bold", serif;
+  letter-spacing: 1px;
+}
+
+::placeholder {
+  text-transform: uppercase;
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #e0e0e0, #adadac, #a4a4a3);
+}
+
+.login-form .login-button {
+  background-color: transparent;
+  font-size: 24px;
+  background-image: linear-gradient(135deg, #e0e0e0, #adadac, #a4a4a3);
+  color: transparent;
+  background-clip: text;
+  width: 70%;
+  border: 2px solid #a4a4a3;
+  padding: 10px;
+  cursor: pointer;
+  height: auto;
+  min-height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease-in-out;
+}
+
+.login-form .login-button:hover {
+  background-color: #a4a4a3;
+  color: white;
+}
+
+.login-form a {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #e0e0e0, #adadac, #a4a4a3);
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
+.LoginView .toast {
+  position: fixed;
+  top: 10px;
+  left: 75%;
+  width: 250px;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 12px;
+  background: #fff;
+  z-index: 10;
+  padding: 20px 35px 20px 25px;
+  box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+
+.LoginView .toast.active {
+  visibility: visible;
+  opacity: 1;
+  left: calc(50% - 155px);
+}
+
+.LoginView .toast-content {
+  display: flex;
+  align-items: center;
+}
+
+.LoginView .toast-content .check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  min-width: 35px;
+  background-color: #f44040;
+  fill: #fff;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.LoginView .toast-content .message {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.LoginView .message .text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.LoginView .message .text.text-1 {
+  font-weight: 600;
+  color: #333;
+}
+
+.LoginView .toast .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.LoginView .toast .close:hover {
+  opacity: 1;
+}
+
+.LoginView .toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+}
+
+.LoginView .toast .progress::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #4070f4;
+}
+
+.LoginView .toast .progress.active::before {
+  animation: progress 5s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}
+
+/*# sourceMappingURL=form.css.map */

@@ -1,9 +1,8 @@
-import "../styles/Form.css"
+import "./Form.css"
 import { useState, FormEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom"
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
-import api from "../api";
-import "../styles/Form.css"
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../constants";
+import api from "../../../api";
 import { AxiosError } from "axios";
 
 
@@ -34,7 +33,7 @@ function Form({route, method}: FormProps) {
 
 
     const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         
         try {
             const res = await api.post(route, {username, password})

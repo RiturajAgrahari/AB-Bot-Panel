@@ -1,6 +1,6 @@
 .Dashboard {
-    box-sizing: border-box;
     padding: 0 20px;
+    width: 100%;
 }
 
 .Dashboard .Bots {

@@ -1,0 +1,58 @@
+.Card {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+  border-radius: 20px;
+  width: 200px;
+  height: 180px;
+  text-decoration: none;
+  padding: 20px 0 0 20px;
+  transition: 0.2s;
+}
+
+.Card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1px 5px 2px rgba(0, 0, 0, 0.2), 0 5px 18px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Card svg {
+  border-radius: 50%;
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+  margin: 0;
+}
+
+.Card .numbers {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.Card .text {
+  font-size: 12px;
+  color: gray;
+  margin: 0;
+  padding: 0;
+}
+
+.cyanish {
+  fill: #3ba8db;
+  background-color: #f2fbff;
+}
+
+.orangish {
+  fill: #ff8c4a;
+  background-color: #ffe3d4;
+}
+
+.greenish {
+  fill: #26bf3c;
+  background-color: #e3ffe7;
+}
+
+.redish {
+  fill: #bf2626;
+  background-color: #ffe3e3;
+}
+
+/*# sourceMappingURL=card.css.map */

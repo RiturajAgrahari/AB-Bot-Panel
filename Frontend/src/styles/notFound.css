@@ -18,6 +18,7 @@
     font-family: 'refrigerator_deluxe_bold', serif;
     line-height: 1.5;
     font-weight: 400;
+    text-align: center;
 }
 
 .not-found .go-home {
@@ -32,4 +33,10 @@
 .not-found .go-home:hover {
     background-color: rgb(211, 208, 208);
     color: #181818;
+}
+
+@media screen and (max-width: 700px) {
+    .not-found {
+        font-size: 1rem;
+    }
 }

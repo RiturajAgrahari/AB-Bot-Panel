@@ -1,4 +1,4 @@
-import Sidebar from "../../components/sidebar";
+import Sidebar from "../../components/sidebar/sidebar";
 import "../../styles/home.css";
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
